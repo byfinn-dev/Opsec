@@ -1,63 +1,55 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OPSEC FINDER // TARGETED</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OPSEC FINDER</title>
 <style>
-:root{--g:#8a8a8a;--d:#1f1f1f;--r:#ff2a2a;--acc:#00ffcc;--bg:#030303}
+:root{--g:#8a8a8a;--d:#2a2a2a;--r:#ff2a2a}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg) radial-gradient(circle at 50% 20%, #111 0%, #000 80%);color:#eee;font:13px/1.5 "JetBrains Mono", "Courier New", monospace;padding:24px 12px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
-body:before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0 1px,transparent 1px 2px);pointer-events:none;z-index:999}
-body:after{content:"";position:fixed;inset:0;box-shadow:inset 0 0 100px rgba(0,0,0,.9);pointer-events:none;z-index:998}
-header,main{position:relative;z-index:2;width:100%;max-width:1200px}
-header{text-align:center;margin-bottom:24px}
-h1{font-size:clamp(28px,6vw,52px);letter-spacing:.3em;font-weight:800;position:relative;display:inline-block;color:#fff;text-shadow:0 0 20px rgba(0,255,204,.4)}
-h1:before,h1:after{content:attr(data-t);position:absolute;inset:0;left:2px;overflow:hidden;mix-blend-mode:screen}
-h1:before{color:var(--r);clip-path:inset(0 0 50% 0);animation:a 4s infinite steps(1)}
-h1:after{color:var(--acc);clip-path:inset(50% 0 0 0);animation:b 3.5s infinite steps(1)}
-@keyframes a{0%,90%,100%{transform:translate(0)}92%{transform:translate(-3px,1px)}96%{transform:translate(3px,-1px)}}
-@keyframes b{0%,85%,100%{transform:translate(0)}88%{transform:translate(3px,-1px)}93%{transform:translate(-3px,1px)}}
-.sub{margin-top:8px;font-size:11px;letter-spacing:.35em;color:var(--g)}
-.sub i{display:inline-block;width:6px;height:6px;background:var(--acc);border-radius:50%;margin-right:8px;box-shadow:0 0 8px var(--acc);animation:k 1.5s infinite}
-@keyframes k{50%{opacity:.2}}
-.shell{display:grid;grid-template-columns:290px 1fr;border:1px solid #333;background:rgba(10,10,10,.85);backdrop-filter:blur(10px);box-shadow:0 10px 40px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
-nav{border-right:1px solid #222;max-height:75vh;overflow-y:auto}
-nav::-webkit-scrollbar{width:4px}
-nav::-webkit-scrollbar-thumb{background:#333}
-#q{width:100%;border:0;border-bottom:1px solid #333;background:#050505;color:var(--acc);padding:12px;font:inherit;outline:0;position:sticky;top:0;z-index:5}
-#q::placeholder{color:#555}
-.cat{padding:8px 12px;font-size:10px;letter-spacing:.25em;color:var(--acc);background:#080808;border-bottom:1px solid #1a1a1a;border-top:1px solid #1a1a1a;position:sticky;top:41px;z-index:4;font-weight:bold}
-nav button{display:block;width:100%;background:0;color:#bbb;border:0;border-bottom:1px solid #141414;padding:9px 12px;font:inherit;font-size:11px;text-align:left;cursor:pointer;letter-spacing:.04em;transition:all .15s}
-nav button:hover{background:#181818;color:#fff;padding-left:16px}
-nav button.on{background:var(--acc);color:#000;font-weight:bold;padding-left:16px}
-.pan{padding:20px;display:flex;flex-direction:column}
-.tt{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222;padding-bottom:10px;margin-bottom:14px;letter-spacing:.15em;font-size:12px;color:#fff}
-.tt em{font-style:normal;color:var(--acc);font-size:10px;background:#111;padding:2px 6px;border:1px solid #333}
-textarea,input.i{width:100%;background:#050505;border:1px solid #333;color:#fff;padding:12px;font:inherit;outline:0;margin-bottom:10px;border-radius:2px}
-textarea{min-height:110px;resize:vertical}
-textarea:focus,input:focus{border-color:var(--acc);box-shadow:0 0 10px rgba(0,255,204,.2)}
-.row{display:flex;gap:10px;margin-bottom:4px}
-.b{background:var(--acc);color:#000;border:0;padding:10px 20px;font:inherit;font-weight:bold;letter-spacing:.1em;cursor:pointer;transition:all .15s;border-radius:2px}
-.b:hover{background:#fff;box-shadow:0 0 12px rgba(255,255,255,.5)}
-.b.s{background:#151515;color:#ccc;border:1px solid #333}
-.b.s:hover{background:#222;color:#fff;border-color:#555}
-pre{margin-top:12px;border:1px solid #222;padding:14px;white-space:pre-wrap;word-break:break-all;min-height:100px;max-height:380px;overflow:auto;background:#020202;line-height:1.6;font-size:12px;color:#00ffcc;border-radius:2px}
-.err{color:var(--r)!important}
-@media(max-width:768px){.shell{grid-template-columns:1px;grid-template-rows:220px 1fr}nav{max-height:220px;border-right:0;border-bottom:1px solid #333}}
+body{background:#000 url(bg.jpg) center/cover fixed;color:#fff;font:14px "Courier New",monospace;padding:24px 12px 40px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse,rgba(0,0,0,.5),rgba(0,0,0,.93))}
+body:after{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);pointer-events:none}
+header,main{position:relative;z-index:2;width:100%;max-width:1100px}
+header{text-align:center;margin-bottom:22px}
+h1{font-size:clamp(30px,7vw,64px);letter-spacing:.3em;padding-left:.3em;font-weight:900;position:relative;display:inline-block;text-shadow:0 0 18px #fff6}
+h1:before,h1:after{content:attr(data-t);position:absolute;inset:0;padding-left:.3em;overflow:hidden;mix-blend-mode:screen}
+h1:before{color:var(--r);clip-path:inset(0 0 62% 0);animation:a 3s infinite steps(1)}
+h1:after{color:#3cf;clip-path:inset(58% 0 0 0);animation:b 2.6s infinite steps(1)}
+@keyframes a{0%,88%,100%{transform:translate(3px)}90%{transform:translate(-6px,2px)}94%{transform:translate(7px,-2px)}}
+@keyframes b{0%,80%,100%{transform:translate(-3px)}83%{transform:translate(6px,1px)}87%{transform:translate(-7px)}}
+.sub{margin-top:10px;font-size:12px;letter-spacing:.4em;color:var(--g)}
+.sub i{display:inline-block;width:8px;height:8px;background:var(--r);border-radius:50%;margin-right:10px;animation:k 1s infinite}
+@keyframes k{50%{opacity:.15}}
+.shell{display:grid;grid-template-columns:250px 1fr;border:1px solid #fff;background:rgba(0,0,0,.82);backdrop-filter:blur(4px);box-shadow:0 0 40px #fff1}
+nav{border-right:1px solid #fff;max-height:78vh;overflow:auto}
+#q{width:100%;border:0;border-bottom:1px solid #fff;background:#000;color:#fff;padding:13px;font:inherit;outline:0;position:sticky;top:0}
+.cat{padding:9px 13px;font-size:11px;letter-spacing:.3em;color:var(--g);background:#0c0c0c;border-bottom:1px solid var(--d);position:sticky;top:44px}
+nav button{display:block;width:100%;background:0;color:#fff;border:0;border-bottom:1px solid var(--d);padding:9px 13px;font:inherit;font-size:12px;text-align:left;cursor:pointer;letter-spacing:.06em}
+nav button:hover{background:#1c1c1c}nav button.on{background:#fff;color:#000}
+.pan{padding:20px}
+.tt{display:flex;justify-content:space-between;border-bottom:1px solid var(--d);padding-bottom:10px;margin-bottom:14px;letter-spacing:.2em}
+.tt em{font-style:normal;color:var(--g);font-size:11px}
+textarea,input.i{width:100%;background:#000;border:1px solid #fff;color:#fff;padding:11px;font:inherit;outline:0;margin-bottom:8px}
+textarea{min-height:120px;resize:vertical}
+textarea:focus,input:focus{box-shadow:0 0 14px #fff4}
+.row{display:flex;gap:8px}
+.b{background:#fff;color:#000;border:1px solid #fff;padding:12px 22px;font:inherit;font-weight:900;letter-spacing:.15em;cursor:pointer}
+.b:hover{background:#000;color:#fff}.b.s{background:#000;color:#fff}.b.s:hover{background:#fff;color:#000}
+pre{margin-top:14px;border:1px solid var(--d);padding:14px;white-space:pre-wrap;word-break:break-all;min-height:90px;max-height:420px;overflow:auto;background:#050505;line-height:1.6}
+.err{color:var(--r)}
+@media(max-width:760px){.shell{grid-template-columns:1fr}nav{max-height:260px;border-right:0;border-bottom:1px solid #fff}}
 </style></head><body>
 <header><h1 data-t="OPSEC FINDER">OPSEC FINDER</h1><div class="sub"><i></i><span id="cnt"></span></div></header>
 <main><div class="shell"><nav id="nav"></nav>
 <div class="pan"><div class="tt"><span id="mt"></span><em id="mc"></em></div>
-<textarea id="i" placeholder="Input..."></textarea><input class="i" id="i2" style="display:none">
+<textarea id="i"></textarea><input class="i" id="i2" style="display:none">
 <div class="row"><button class="b" id="go">RUN</button><button class="b s" id="cp">COPY</button></div>
 <pre id="o"></pre></div></div></main>
 <script>
 const M=[],$=i=>document.getElementById(i);
 const add=(c,n,f,h,h2)=>M.push({c,n,f,h,h2});
-const T=o=>Object.entries(o).map(([k,v])=>k.padEnd(16)+(v??"-")).join("\n");
+const T=o=>Object.entries(o).map(([k,v])=>k.padEnd(14)+(v??"-")).join("\n");
 const J=async u=>{const r=await fetch(u);if(!r.ok)throw"Request failed ("+r.status+")";return r.json()};
 
-// KATEGORIEN
 const RECON="RECON",SEC="SECURITY",TARGET="TARGET";
 
-// 1. IP LOOKUP
 add(RECON,"IP LOOKUP",async s=>{
   const d=await J("https://ipwho.is/"+encodeURIComponent(s.trim()));
   if(!d.success)throw d.message;
@@ -65,32 +57,27 @@ add(RECON,"IP LOOKUP",async s=>{
   return T({IP:d.ip,TYPE:d.type,COUNTRY:d.country+" ("+d.country_code+")",REGION:d.region,CITY:d.city,ZIP:d.postal,COORDS:d.latitude+", "+d.longitude,ISP:c.isp,ORG:c.org,ASN:c.asn,TIMEZONE:(d.timezone||{}).id});
 },"IP Address");
 
-// 2. IP LOCATOR (Current User Location)
 add(RECON,"IP LOCATOR",async()=>{
   const d=await J("https://ipwho.is/");
   if(!d.success)throw d.message;
   const c=d.connection||{};
-  return "=== YOUR CURRENT LOCATION ==\n"+T({IP:d.ip,CITY:d.city,REGION:d.region,COUNTRY:d.country,ISP:c.isp,COORDS:d.latitude+", "+d.longitude});
+  return "=== YOUR CURRENT LOCATION ===\n"+T({IP:d.ip,CITY:d.city,REGION:d.region,COUNTRY:d.country,ISP:c.isp,COORDS:d.latitude+", "+d.longitude});
 },0);
 
-// 3. DISCORD ID LOOKUP
 add(RECON,"DISCORD ID LOOKUP",async s=>{
   const id=s.trim();
   if(!/^\d{17,19}$/.test(id))throw"Invalid Discord User ID (must be 17-19 digits)";
-  // Note: Standard Discord API requires bot tokens, using public lookup fallback / widgets simulation or external API where possible
   const d=await J("https://japi.rest/discord/v1/user/"+id);
   if(!d.success)throw"User not found or API restricted";
   const u=d.data;
   return T({ID:u.id,USERNAME:u.username,TAG:"#"+u.discriminator,BOT:u.bot?"YES":"NO",CREATED:new Date(Number((BigInt(u.id) >> 22n) + 1420070400000n)).toUTCString(),AVATAR_URL:u.avatarURL});
 },"Discord User ID");
 
-// 4. MINECRAFT SERVER LOOKUP
 add(RECON,"MINECRAFT SERVER",async s=>{
   const d=await J("https://api.mcsrvstat.us/2/"+encodeURIComponent(s.trim()));
   if(!d.online)throw"Server is offline or unreachable";
-  return T({IP:d.ip,PORT:d.port,ONLINE:d.online?"YES":"NO",PLAYERS:d.players.max?(d.players.online+"/"+d.players.max):d.players.online,VERSION:d.version,MOTD:(d.motd.clean||[]).join(" ")})},"Server IP or Domain (e.g. hypixel.net)");
+  return T({IP:d.ip,PORT:d.port,ONLINE:d.online?"YES":"NO",PLAYERS:d.players.max?(d.players.online+"/"+d.players.max):d.players.online,VERSION:d.version,MOTD:(d.motd.clean||[]).join(" ")})},"Server IP or Domain");
 
-// 5. WEBRTC LEAK CHECKER
 add(SEC,"WEBRTC LEAK CHECK",async()=>{
   return new Promise(res=>{
     const ips=new Set();
@@ -111,18 +98,15 @@ add(SEC,"WEBRTC LEAK CHECK",async()=>{
   });
 },0);
 
-// 6. LOGIN PANEL MOCKUP
 add(TARGET,"LOGIN PANEL",s=>{
   const[user,pass]=(s||"").split(":");
   if(!user||!pass)throw"Format error! Use: username:password in the main box";
   return "AUTHENTICATION FAILED\nTarget User: "+user.trim()+"\nReason: Invalid credentials or database locked.";
 },"username:password");
 
-// 7. DOXFINDER (Leak & Trace Scanner)
 add(TARGET,"DOXFINDER",async s=>{
   const query=s.trim();
   if(!query)throw"Enter a username, email or IP to scan!";
-  // Simulated deep search across known leak aggregation patterns
   await new Promise(r=>setTimeout(r,1200));
   return "=== DOXFINDER SCAN RESULT FOR: ["+query+"] ===\n" +
          "[!] Scanning public breach databases...\n" +
@@ -138,25 +122,25 @@ add(TARGET,"DOXFINDER",async s=>{
          "[*] Recommendation: Change passwords immediately and enable 2FA.";
 },"Username, Email or IP");
 
-// UI INITIALISIERUNG
 let cur;
 const nav=$("nav"),cats=[...new Set(M.map(m=>m.c))];
-$("cnt").textContent=M.length+" MODULES · "+cats.length+" CATEGORIES";
+$("cnt").textContent=M.length+" MODULES · "+cats.length+" KATEGORIEN";
 function build(f){
-  nav.innerHTML='<input id="q" placeholder="SEARCH..." value="'+f+'">';
+  nav.innerHTML='<input id="q" placeholder="SUCHE..." value="'+f+'">';
   cats.forEach(c=>{const l=M.filter(m=>m.c==c&&m.n.toLowerCase().includes(f.toLowerCase()));if(!l.length)return;
     const h=document.createElement("div");h.className="cat";h.textContent=c+" ["+l.length+"]";nav.appendChild(h);
     l.forEach(m=>{const b=document.createElement("button");b.textContent=m.n;if(m==cur)b.className="on";b.onclick=()=>pick(m);nav.appendChild(b)})});
   const q=$("q");q.oninput=()=>{build(q.value);$("q").focus();$("q").setSelectionRange(99,99)}
 }
 function pick(m){cur=m;$("mt").textContent=m.n+" »";$("mc").textContent=m.c;
-  $("i").style.display=m.h===0?"none":"block";$("i").placeholder=m.h||"Input";
+  $("i").style.display=m.h===0?"none":"block";$("i").placeholder=m.h||"Eingabe";
   $("i2").style.display=m.h2?"block":"none";$("i2").placeholder=m.h2||"";$("o").textContent="";$("o").className="";
   document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.textContent==m.n))}
-async function run(){const o=$("o");o.className="";o.textContent="SCANNING...";
-  try{o.textContent=String(await cur.f($("i").value,$("i2").value))}catch(e){o.className="err";o.textContent="ERROR: "+(e.message||e)}}
+async function run(){const o=$("o");o.className="";o.textContent="...";
+  try{o.textContent=String(await cur.f($("i").value,$("i2").value))}catch(e){o.className="err";o.textContent="FEHLER: "+(e.message||e)}}
 $("go").onclick=run;
 $("cp").onclick=()=>navigator.clipboard.writeText($("o").textContent);
 $("i").addEventListener("keydown",e=>{if(e.key=="Enter"&&e.ctrlKey)run()});
+$("i2").addEventListener("keydown",e=>{if(e.key=="Enter")run()});
 build("");pick(M[0]);
 </script></body></html>
