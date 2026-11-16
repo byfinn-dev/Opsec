@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OPSEC FINDER</title>
+<style>
+:root{--w:#fff;--g:#8a8a8a;--d:#2a2a2a;--r:#ff2a2a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{background:#000 url("bg.jpg") center/cover no-repeat fixed;color:var(--w);font-family:"Courier New",ui-monospace,monospace;padding:26px 14px 50px;display:flex;flex-direction:column;align-items:center}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.45),rgba(0,0,0,.92));z-index:0}
+body::after{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);pointer-events:none;z-index:5}
+header,main,footer{position:relative;z-index:2;width:100%;max-width:1040px}
+header{text-align:center;margin-bottom:26px}
+h1{font-size:clamp(30px,7vw,68px);letter-spacing:.32em;padding-left:.32em;font-weight:900;position:relative;display:inline-block;text-shadow:0 0 18px rgba(255,255,255,.4)}
+h1::before,h1::after{content:attr(data-t);position:absolute;inset:0;padding-left:.32em;overflow:hidden}
+h1::before{color:var(--r);transform:translate(3px,0);clip-path:inset(0 0 62% 0);animation:g1 3.2s infinite steps(1);mix-blend-mode:screen}
+h1::after{color:#3cf;transform:translate(-3px,0);clip-path:inset(58% 0 0 0);animation:g2 2.7s infinite steps(1);mix-blend-mode:screen}
+@keyframes g1{0%,88%,100%{transform:translate(3px,0)}90%{transform:translate(-6px,2px)}94%{transform:translate(7px,-2px)}}
+@keyframes g2{0%,80%,100%{transform:translate(-3px,0)}83%{transform:translate(6px,1px)}87%{transform:translate(-7px,-1px)}}
+.sub{margin-top:10px;font-size:12px;letter-spacing:.5em;color:var(--g)}
+.sub i{display:inline-block;width:8px;height:8px;background:var(--r);border-radius:50%;margin-right:10px;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.15}}
+.shell{display:grid;grid-template-columns:190px 1fr;border:1px solid var(--w);background:rgba(0,0,0,.8);backdrop-filter:blur(4px);box-shadow:0 0 0 4px rgba(0,0,0,.6),0 0 40px rgba(255,255,255,.08)}
+nav{border-right:1px solid var(--w);display:flex;flex-direction:column}
+nav button{background:none;color:var(--w);border:0;border-bottom:1px solid var(--d);padding:14px 14px;font:inherit;font-size:13px;letter-spacing:.18em;text-align:left;cursor:pointer;transition:.12s}
+nav button span{color:var(--g);margin-right:8px}
+nav button:hover{background:#1a1a1a}
+nav button.on{background:var(--w);color:#000}
+nav button.on span{color:#000}
+.panel{display:none;padding:20px}
+.panel.on{display:block}
+.title{display:flex;justify-content:space-between;border-bottom:1px solid var(--d);padding-bottom:10px;margin-bottom:16px;font-size:13px;letter-spacing:.25em}
+.title em{font-style:normal;color:var(--g);font-size:11px;letter-spacing:.1em}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input,select,textarea{background:#000;border:1px solid var(--w);color:var(--w);padding:12px;font:inherit;font-size:15px;outline:none;min-width:0}
+input,textarea{flex:1}
+textarea{width:100%;min-height:110px;resize:vertical;margin-bottom:8px}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 1px var(--w),0 0 14px rgba(255,255,255,.25)}
+::placeholder{color:#666}
+.btn{background:var(--w);color:#000;border:1px solid var(--w);padding:0 22px;font:inherit;font-weight:900;letter-spacing:.15em;cursor:pointer;min-height:44px}
+.btn:hover{background:#000;color:var(--w)}
+.btn.s{background:#000;color:var(--w)}
+.btn.s:hover{background:var(--w);color:#000}
+.msg{margin-top:12px;font-size:13px;color:var(--g);min-height:16px}
+.err{color:var(--r)}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+td{padding:8px 0;border-bottom:1px solid var(--d);vertical-align:top}
+td:first-child{color:var(--g);width:34%;padding-right:10px;letter-spacing:.08em}
+td:last-child{word-break:break-word}
+tr.hi td:last-child{color:#fff;font-weight:900;text-shadow:0 0 8px rgba(255,255,255,.5)}
+iframe{width:100%;height:260px;border:1px solid var(--w);margin-top:14px;filter:grayscale(1) invert(1) contrast(.9)}
+a{color:var(--w)}
+.log{margin-top:18px;border:1px solid var(--w);background:rgba(0,0,0,.8);padding:12px 14px;font-size:12px;color:var(--g);max-height:150px;overflow:auto}
+.log b{color:var(--w);font-weight:400}
+.log div{padding:2px 0}
+footer{margin-top:18px;text-align:center;font-size:11px;letter-spacing:.3em;color:#555}
+@media(max-width:720px){.shell{grid-template-columns:1fr}nav{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--w)}nav button{white-space:nowrap;border-bottom:0;border-right:1px solid var(--d)}td:first-child{width:40%}}
+</style>
+</head>
+<body>
+<header>
+  <h1 data-t="OPSEC FINDER">OPSEC FINDER</h1>
+  <div class="sub"><i></i>ONLINE</div>
+</header>
+<main>
+  <div class="shell">
+    <nav id="nav">
+      <button data-p="ip" class="on"><span>01</span>IP FIND</button>
+      <button data-p="me"><span>02</span>MY INFO</button>
+      <button data-p="tel"><span>03</span>NUMBER</button>
+      <button data-p="dns"><span>04</span>DNS</button>
+      <button data-p="dom"><span>05</span>DOMAIN</button>
+      <button data-p="hash"><span>06</span>HASH</button>
+      <button data-p="b64"><span>07</span>BASE64</button>
+    </nav>
+    <div>
+      <section class="panel on" id="p-ip">
+        <div class="title"><span>IP FIND &raquo;</span><em>STANDORT / ANBIETER</em></div>
+        <div class="row"><input id="ip" placeholder="IP-Adresse" autocomplete="off" spellcheck="false"><button class="btn" id="ipB">FIND</button></div>
+        <div class="msg" id="ipM"></div>
+        <table id="ipT"></table>
+        <div id="ipMap"></div>
+      </section>
+      <section class="panel" id="p-me">
+        <div class="title"><span>MY INFO &raquo;</span><em>DEINE SICHTBARKEIT</em></div>
+        <div class="row"><button class="btn" id="meB">SCAN</button></div>
+        <div class="msg" id="meM"></div>
+        <table id="meT"></table>
+      </section>
+      <section class="panel" id="p-tel">
+        <div class="title"><span>NUMBER &raquo;</span><em>NETZ / TYP / LAND</em></div>
+        <div class="row"><input id="tel" placeholder="+49 151 12345678" autocomplete="off" spellcheck="false"><button class="btn" id="telB">FIND</button></div>
+        <div class="msg" id="telM"></div>
+        <table id="telT"></table>
+      </section>
+      <section class="panel" id="p-dns">
+        <div class="title"><span>DNS &raquo;</span><em>RECORDS</em></div>
+        <div class="row"><input id="dns" placeholder="example.com" autocomplete="off" spellcheck="false">
+          <select id="dnsType"><option>A</option><option>AAAA</option><option>MX</option><option>NS</option><option>TXT</option><option>CNAME</option><option>SOA</option></select>
+          <button class="btn" id="dnsB">LOOKUP</button></div>
+        <div class="msg" id="dnsM"></div>
+        <table id="dnsT"></table>
+      </section>
+      <section class="panel" id="p-dom">
+        <div class="title"><span>DOMAIN &raquo;</span><em>WHOIS / ALTER</em></div>
+        <div class="row"><input id="dom" placeholder="example.com" autocomplete="off" spellcheck="false"><button class="btn" id="domB">FIND</button></div>
+        <div class="msg" id="domM"></div>
+        <table id="domT"></table>
+      </section>
+      <section class="panel" id="p-hash">
+        <div class="title"><span>HASH &raquo;</span><em>SHA</em></div>
+        <textarea id="hin" placeholder="Text"></textarea>
+        <div class="row"><button class="btn" id="hB">HASH</button></div>
+        <table id="hT"></table>
+      </section>
+      <section class="panel" id="p-b64">
+        <div class="title"><span>BASE64 &raquo;</span><em>ENCODE / DECODE</em></div>
+        <textarea id="bin" placeholder="Text"></textarea>
+        <div class="row"><button class="btn" id="bE">ENCODE</button><button class="btn s" id="bD">DECODE</button></div>
+        <textarea id="bout" placeholder="Ergebnis" style="margin-top:12px" readonly></textarea>
+      </section>
+    </div>
+  </div>
+  <div class="log" id="log"><div>&gt; bereit</div></div>
+</main>
+<footer>OPSEC FINDER</footer>
+<script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.11.14/bundle/libphonenumber-max.js"></script>
+<script>
+var $=function(i){return document.getElementById(i)};
+function esc(s){return String(s==null||s===""?"-":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function fill(id,rows){$(id).innerHTML=rows.map(function(r){return "<tr"+(r[2]?' class="hi"':"")+"><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>"}).join("")}
+function say(id,t,e){var m=$(id);m.className="msg"+(e?" err":"");m.textContent=t}
+function log(t){var l=$("log"),d=document.createElement("div"),n=new Date().toLocaleTimeString("de-DE");d.innerHTML="<b>"+n+"</b> &gt; "+esc(t);l.appendChild(d);l.scrollTop=l.scrollHeight}
+function enter(i,b){$(i).addEventListener("keydown",function(e){if(e.key==="Enter")$(b).click()})}
+
+$("nav").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  document.querySelectorAll("nav button,.panel").forEach(function(x){x.classList.remove("on")});
+  b.classList.add("on");$("p-"+b.dataset.p).classList.add("on");
+});
+
+function ipRows(d){
+  var c=d.connection||{},tz=d.timezone||{};
+  return [
+    ["IP",esc(d.ip)],
+    ["TYP",esc(d.type)],
+    ["LAND",esc(d.country)+" ("+esc(d.country_code)+")",1],
+    ["REGION",esc(d.region)],
+    ["STADT",esc(d.city),1],
+    ["PLZ",esc(d.postal)],
+    ["KOORDINATEN",esc(d.latitude)+", "+esc(d.longitude)],
+    ["ANBIETER",esc(c.isp),1],
+    ["ORGANISATION",esc(c.org)],
+    ["ASN",esc(c.asn)],
+    ["DOMAIN",esc(c.domain)],
+    ["ZEITZONE",esc(tz.id)+" ("+esc(tz.utc)+")"],
+    ["WÄHRUNG",esc((d.currency||{}).code)],
+    ["VORWAHL","+"+esc(d.calling_code)]
+  ];
+}
+async function ipLookup(v,msgId,tblId,mapId){
+  say(msgId,"suche...");$(tblId).innerHTML="";if(mapId)$(mapId).innerHTML="";
+  try{
+    var r=await fetch("https://ipwho.is/"+encodeURIComponent(v));
+    var d=await r.json();
+    if(!d.success){say(msgId,d.message||"Fehler",1);return null}
+    say(msgId,"");fill(tblId,ipRows(d));
+    if(mapId&&d.latitude!=null){
+      var la=d.latitude,lo=d.longitude,k=0.06;
+      $(mapId).innerHTML='<iframe src="https://www.openstreetmap.org/export/embed.html?bbox='+(lo-k)+'%2C'+(la-k/2)+'%2C'+(lo+k)+'%2C'+(la+k/2)+'&layer=mapnik&marker='+la+'%2C'+lo+'"></iframe>';
+    }
+    log("IP "+d.ip+" → "+(d.city||"?")+", "+(d.country_code||"?")+" / "+((d.connection||{}).isp||"?"));
+    return d;
+  }catch(e){say(msgId,"Abfrage fehlgeschlagen",1);return null}
+}
+$("ipB").onclick=function(){ipLookup($("ip").value.trim(),"ipM","ipT","ipMap")};
+enter("ip","ipB");
+
+$("meB").onclick=async function(){
+  var d=await ipLookup("","meM","meT");
+  if(!d)return;
+  var n=navigator,s=screen,rows=ipRows(d);
+  rows.push(["BROWSER",esc(n.userAgent)]);
+  rows.push(["SPRACHE",esc((n.languages||[n.language]).join(", "))]);
+  rows.push(["PLATTFORM",esc(n.platform)]);
+  rows.push(["CPU KERNE",esc(n.hardwareConcurrency)]);
+  rows.push(["RAM (GB)",esc(n.deviceMemory)]);
+  rows.push(["BILDSCHIRM",s.width+" x "+s.height+" @"+window.devicePixelRatio+"x"]);
+  rows.push(["ZEITZONE (BROWSER)",esc(Intl.DateTimeFormat().resolvedOptions().timeZone)]);
+  rows.push(["DO NOT TRACK",esc(n.doNotTrack)]);
+  rows.push(["COOKIES",n.cookieEnabled?"an":"aus"]);
+  rows.push(["ONLINE",n.onLine?"ja":"nein"]);
+  fill("meT",rows);
+};
+
+var DE={
+"0151":"Telekom","0160":"Telekom","0170":"Telekom","0171":"Telekom","0175":"Telekom",
+"0152":"Vodafone","0162":"Vodafone","0172":"Vodafone","0173":"Vodafone","0174":"Vodafone",
+"0155":"1&1","0157":"E-Plus / O2","0159":"E-Plus / O2","0163":"E-Plus / O2","0177":"E-Plus / O2","0178":"E-Plus / O2",
+"0176":"O2 Telefonica","0179":"O2 Telefonica"
+};
+$("telB").onclick=function(){
+  var v=$("tel").value.trim();$("telT").innerHTML="";say("telM","");
+  var p=libphonenumber.parsePhoneNumberFromString(v,"DE");
+  if(!p||!p.isPossible()){say("telM","Ungültige Nummer",1);return}
+  var prov="-";
+  if(p.country==="DE")prov=DE[("0"+p.nationalNumber).slice(0,4)]||"-";
+  fill("telT",[
+    ["NUMMER",esc(p.formatInternational())],
+    ["NATIONAL",esc(p.formatNational())],
+    ["E.164",esc(p.number)],
+    ["LAND",esc(p.country)+" (+"+esc(p.countryCallingCode)+")",1],
+    ["GÜLTIG",p.isValid()?"ja":"nein"],
+    ["TYP",esc(p.getType()),1],
+    ["ANBIETER",esc(prov),1]
+  ]);
+  log("NUMBER "+p.number+" → "+prov);
+};
+enter("tel","telB");
+
+var DT={1:"A",2:"NS",5:"CNAME",6:"SOA",15:"MX",16:"TXT",28:"AAAA"};
+$("dnsB").onclick=async function(){
+  var v=$("dns").value.trim(),t=$("dnsType").value;$("dnsT").innerHTML="";
+  if(!v){say("dnsM","Domain eingeben",1);return}
+  say("dnsM","suche...");
+  try{
+    var r=await fetch("https://dns.google/resolve?name="+encodeURIComponent(v)+"&type="+t);
+    var d=await r.json();
+    if(!d.Answer){say("dnsM","Keine Einträge",1);return}
+    say("dnsM","");
+    fill("dnsT",d.Answer.map(function(a){return [esc(DT[a.type]||a.type)+" · TTL "+a.TTL,esc(a.data)]}));
+    log("DNS "+t+" "+v+" → "+d.Answer.length+" Einträge");
+  }catch(e){say("dnsM","Abfrage fehlgeschlagen",1)}
+};
+enter("dns","dnsB");
+
+function ageOf(iso){
+  var ms=Date.now()-new Date(iso).getTime(),y=Math.floor(ms/31557600000),m=Math.floor(ms%31557600000/2629800000);
+  return y+" Jahre, "+m+" Monate";
+}
+$("domB").onclick=async function(){
+  var v=$("dom").value.trim().toLowerCase().replace(/^https?:\/\//,"").replace(/\/.*$/,"");$("domT").innerHTML="";
+  if(!v){say("domM","Domain eingeben",1);return}
+  say("domM","suche...");
+  try{
+    var r=await fetch("https://rdap.org/domain/"+encodeURIComponent(v));
+    if(!r.ok){say("domM","Keine Daten gefunden",1);return}
+    var d=await r.json(),ev={};
+    (d.events||[]).forEach(function(e){ev[e.eventAction]=e.eventDate});
+    var ns=(d.nameservers||[]).map(function(n){return n.ldhName}).join("<br>");
+    var rows=[["DOMAIN",esc(d.ldhName)]];
+    if(ev.registration)rows.push(["REGISTRIERT",esc(ev.registration.slice(0,10)),1],["ALTER",ageOf(ev.registration),1]);
+    if(ev["last changed"])rows.push(["GEÄNDERT",esc(ev["last changed"].slice(0,10))]);
+    if(ev.expiration)rows.push(["LÄUFT AB",esc(ev.expiration.slice(0,10))]);
+    rows.push(["STATUS",esc((d.status||[]).join(", "))]);
+    rows.push(["NAMESERVER",ns||"-"]);
+    say("domM","");fill("domT",rows);
+    log("DOMAIN "+v+" → "+(ev.registration?ev.registration.slice(0,10):"?"));
+  }catch(e){say("domM","Abfrage fehlgeschlagen",1)}
+};
+enter("dom","domB");
+
+$("hB").onclick=async function(){
+  var t=new TextEncoder().encode($("hin").value),rows=[];
+  for(var a of ["SHA-1","SHA-256","SHA-384","SHA-512"]){
+    var h=await crypto.subtle.digest(a,t);
+    rows.push([a,Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,"0")}).join("")]);
+  }
+  fill("hT",rows);log("HASH berechnet");
+};
+
+$("bE").onclick=function(){
+  var b=new TextEncoder().encode($("bin").value),s="";
+  b.forEach(function(x){s+=String.fromCharCode(x)});
+  $("bout").value=btoa(s);
+};
+$("bD").onclick=function(){
+  try{
+    var s=atob($("bin").value.trim()),a=new Uint8Array(s.length);
+    for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);
+    $("bout").value=new TextDecoder().decode(a);
+  }catch(e){$("bout").value="Ungültiges Base64"}
+};
+</script>
+</body>
+</html>
