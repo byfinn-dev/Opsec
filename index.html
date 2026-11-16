@@ -1,288 +1,237 @@
 <!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OPSEC FINDER</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OPSEC FINDER // PRO</title>
 <style>
-:root{--w:#fff;--g:#8a8a8a;--d:#2a2a2a;--r:#ff2a2a}
+:root{--g:#8a8a8a;--d:#2a2a2a;--r:#ff2a2a;--acc:#3cf}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100%}
-body{background:#000 url("bg.jpg") center/cover no-repeat fixed;color:var(--w);font-family:"Courier New",ui-monospace,monospace;padding:26px 14px 50px;display:flex;flex-direction:column;align-items:center}
-body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.45),rgba(0,0,0,.92));z-index:0}
-body::after{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);pointer-events:none;z-index:5}
-header,main,footer{position:relative;z-index:2;width:100%;max-width:1040px}
-header{text-align:center;margin-bottom:26px}
-h1{font-size:clamp(30px,7vw,68px);letter-spacing:.32em;padding-left:.32em;font-weight:900;position:relative;display:inline-block;text-shadow:0 0 18px rgba(255,255,255,.4)}
-h1::before,h1::after{content:attr(data-t);position:absolute;inset:0;padding-left:.32em;overflow:hidden}
-h1::before{color:var(--r);transform:translate(3px,0);clip-path:inset(0 0 62% 0);animation:g1 3.2s infinite steps(1);mix-blend-mode:screen}
-h1::after{color:#3cf;transform:translate(-3px,0);clip-path:inset(58% 0 0 0);animation:g2 2.7s infinite steps(1);mix-blend-mode:screen}
-@keyframes g1{0%,88%,100%{transform:translate(3px,0)}90%{transform:translate(-6px,2px)}94%{transform:translate(7px,-2px)}}
-@keyframes g2{0%,80%,100%{transform:translate(-3px,0)}83%{transform:translate(6px,1px)}87%{transform:translate(-7px,-1px)}}
-.sub{margin-top:10px;font-size:12px;letter-spacing:.5em;color:var(--g)}
-.sub i{display:inline-block;width:8px;height:8px;background:var(--r);border-radius:50%;margin-right:10px;animation:bl 1s infinite}
-@keyframes bl{50%{opacity:.15}}
-.shell{display:grid;grid-template-columns:190px 1fr;border:1px solid var(--w);background:rgba(0,0,0,.8);backdrop-filter:blur(4px);box-shadow:0 0 0 4px rgba(0,0,0,.6),0 0 40px rgba(255,255,255,.08)}
-nav{border-right:1px solid var(--w);display:flex;flex-direction:column}
-nav button{background:none;color:var(--w);border:0;border-bottom:1px solid var(--d);padding:14px 14px;font:inherit;font-size:13px;letter-spacing:.18em;text-align:left;cursor:pointer;transition:.12s}
-nav button span{color:var(--g);margin-right:8px}
-nav button:hover{background:#1a1a1a}
-nav button.on{background:var(--w);color:#000}
-nav button.on span{color:#000}
-.panel{display:none;padding:20px}
-.panel.on{display:block}
-.title{display:flex;justify-content:space-between;border-bottom:1px solid var(--d);padding-bottom:10px;margin-bottom:16px;font-size:13px;letter-spacing:.25em}
-.title em{font-style:normal;color:var(--g);font-size:11px;letter-spacing:.1em}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-input,select,textarea{background:#000;border:1px solid var(--w);color:var(--w);padding:12px;font:inherit;font-size:15px;outline:none;min-width:0}
-input,textarea{flex:1}
-textarea{width:100%;min-height:110px;resize:vertical;margin-bottom:8px}
-input:focus,select:focus,textarea:focus{box-shadow:0 0 0 1px var(--w),0 0 14px rgba(255,255,255,.25)}
-::placeholder{color:#666}
-.btn{background:var(--w);color:#000;border:1px solid var(--w);padding:0 22px;font:inherit;font-weight:900;letter-spacing:.15em;cursor:pointer;min-height:44px}
-.btn:hover{background:#000;color:var(--w)}
-.btn.s{background:#000;color:var(--w)}
-.btn.s:hover{background:var(--w);color:#000}
-.msg{margin-top:12px;font-size:13px;color:var(--g);min-height:16px}
+body{background:#000 url(bg.jpg) center/cover fixed;color:#fff;font:13px "Courier New",monospace;padding:20px 10px 30px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse,rgba(0,0,0,.6),rgba(0,0,0,.95))}
+body:after{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px);pointer-events:none}
+header,main{position:relative;z-index:2;width:100%;max-width:1200px}
+header{text-align:center;margin-bottom:18px}
+h1{font-size:clamp(26px,6vw,54px);letter-spacing:.25em;padding-left:.25em;font-weight:900;position:relative;display:inline-block;text-shadow:0 0 16px #fff5}
+h1:before,h1:after{content:attr(data-t);position:absolute;inset:0;padding-left:.25em;overflow:hidden;mix-blend-mode:screen}
+h1:before{color:var(--r);clip-path:inset(0 0 62% 0);animation:a 3s infinite steps(1)}
+h1:after{color:var(--acc);clip-path:inset(58% 0 0 0);animation:b 2.6s infinite steps(1)}
+@keyframes a{0%,88%,100%{transform:translate(3px)}90%{transform:translate(-6px,2px)}94%{transform:translate(7px,-2px)}}
+@keyframes b{0%,80%,100%{transform:translate(-3px)}83%{transform:translate(6px,1px)}87%{transform:translate(-7px)}}
+.sub{margin-top:8px;font-size:11px;letter-spacing:.3em;color:var(--g)}
+.sub i{display:inline-block;width:7px;height:7px;background:var(--r);border-radius:50%;margin-right:8px;animation:k 1s infinite}
+@keyframes k{50%{opacity:.15}}
+.shell{display:grid;grid-template-columns:280px 1fr;border:1px solid #fff;background:rgba(5,5,5,.88);backdrop-filter:blur(6px);box-shadow:0 0 30px rgba(255,255,255,.08)}
+nav{border-right:1px solid #fff;max-height:80vh;overflow:auto}
+#q{width:100%;border:0;border-bottom:1px solid #fff;background:#000;color:#fff;padding:12px;font:inherit;outline:0;position:sticky;top:0;z-index:5}
+.cat{padding:8px 12px;font-size:10px;letter-spacing:.25em;color:var(--g);background:#0c0c0c;border-bottom:1px solid var(--d);position:sticky;top:41px;z-index:4}
+nav button{display:block;width:100%;background:0;color:#fff;border:0;border-bottom:1px solid var(--d);padding:8px 12px;font:inherit;font-size:11px;text-align:left;cursor:pointer;letter-spacing:.05em;transition:background .1s}
+nav button:hover{background:#1c1c1c}nav button.on{background:#fff;color:#000;font-weight:bold}
+.pan{padding:18px}
+.tt{display:flex;justify-content:space-between;border-bottom:1px solid var(--d);padding-bottom:8px;margin-bottom:12px;letter-spacing:.15em;font-size:12px}
+.tt em{font-style:normal;color:var(--g);font-size:10px}
+textarea,input.i{width:100%;background:#000;border:1px solid #fff;color:#fff;padding:10px;font:inherit;outline:0;margin-bottom:8px}
+textarea{min-height:110px;resize:vertical}
+textarea:focus,input:focus{box-shadow:0 0 12px rgba(255,255,255,.3)}
+.row{display:flex;gap:8px}
+.b{background:#fff;color:#000;border:1px solid #fff;padding:10px 20px;font:inherit;font-weight:900;letter-spacing:.1em;cursor:pointer}
+.b:hover{background:#000;color:#fff}.b.s{background:#000;color:#fff}.b.s:hover{background:#fff;color:#000}
+pre{margin-top:12px;border:1px solid var(--d);padding:12px;white-space:pre-wrap;word-break:break-all;min-height:90px;max-height:400px;overflow:auto;background:#030303;line-height:1.5;font-size:12px}
 .err{color:var(--r)}
-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
-td{padding:8px 0;border-bottom:1px solid var(--d);vertical-align:top}
-td:first-child{color:var(--g);width:34%;padding-right:10px;letter-spacing:.08em}
-td:last-child{word-break:break-word}
-tr.hi td:last-child{color:#fff;font-weight:900;text-shadow:0 0 8px rgba(255,255,255,.5)}
-iframe{width:100%;height:260px;border:1px solid var(--w);margin-top:14px;filter:grayscale(1) invert(1) contrast(.9)}
-a{color:var(--w)}
-.log{margin-top:18px;border:1px solid var(--w);background:rgba(0,0,0,.8);padding:12px 14px;font-size:12px;color:var(--g);max-height:150px;overflow:auto}
-.log b{color:var(--w);font-weight:400}
-.log div{padding:2px 0}
-footer{margin-top:18px;text-align:center;font-size:11px;letter-spacing:.3em;color:#555}
-@media(max-width:720px){.shell{grid-template-columns:1fr}nav{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--w)}nav button{white-space:nowrap;border-bottom:0;border-right:1px solid var(--d)}td:first-child{width:40%}}
-</style>
-</head>
-<body>
-<header>
-  <h1 data-t="OPSEC FINDER">OPSEC FINDER</h1>
-  <div class="sub"><i></i>ONLINE</div>
-</header>
-<main>
-  <div class="shell">
-    <nav id="nav">
-      <button data-p="ip" class="on"><span>01</span>IP FIND</button>
-      <button data-p="me"><span>02</span>MY INFO</button>
-      <button data-p="tel"><span>03</span>NUMBER</button>
-      <button data-p="dns"><span>04</span>DNS</button>
-      <button data-p="dom"><span>05</span>DOMAIN</button>
-      <button data-p="hash"><span>06</span>HASH</button>
-      <button data-p="b64"><span>07</span>BASE64</button>
-    </nav>
-    <div>
-      <section class="panel on" id="p-ip">
-        <div class="title"><span>IP FIND &raquo;</span><em>STANDORT / ANBIETER</em></div>
-        <div class="row"><input id="ip" placeholder="IP-Adresse" autocomplete="off" spellcheck="false"><button class="btn" id="ipB">FIND</button></div>
-        <div class="msg" id="ipM"></div>
-        <table id="ipT"></table>
-        <div id="ipMap"></div>
-      </section>
-      <section class="panel" id="p-me">
-        <div class="title"><span>MY INFO &raquo;</span><em>DEINE SICHTBARKEIT</em></div>
-        <div class="row"><button class="btn" id="meB">SCAN</button></div>
-        <div class="msg" id="meM"></div>
-        <table id="meT"></table>
-      </section>
-      <section class="panel" id="p-tel">
-        <div class="title"><span>NUMBER &raquo;</span><em>NETZ / TYP / LAND</em></div>
-        <div class="row"><input id="tel" placeholder="+49 151 12345678" autocomplete="off" spellcheck="false"><button class="btn" id="telB">FIND</button></div>
-        <div class="msg" id="telM"></div>
-        <table id="telT"></table>
-      </section>
-      <section class="panel" id="p-dns">
-        <div class="title"><span>DNS &raquo;</span><em>RECORDS</em></div>
-        <div class="row"><input id="dns" placeholder="example.com" autocomplete="off" spellcheck="false">
-          <select id="dnsType"><option>A</option><option>AAAA</option><option>MX</option><option>NS</option><option>TXT</option><option>CNAME</option><option>SOA</option></select>
-          <button class="btn" id="dnsB">LOOKUP</button></div>
-        <div class="msg" id="dnsM"></div>
-        <table id="dnsT"></table>
-      </section>
-      <section class="panel" id="p-dom">
-        <div class="title"><span>DOMAIN &raquo;</span><em>WHOIS / ALTER</em></div>
-        <div class="row"><input id="dom" placeholder="example.com" autocomplete="off" spellcheck="false"><button class="btn" id="domB">FIND</button></div>
-        <div class="msg" id="domM"></div>
-        <table id="domT"></table>
-      </section>
-      <section class="panel" id="p-hash">
-        <div class="title"><span>HASH &raquo;</span><em>SHA</em></div>
-        <textarea id="hin" placeholder="Text"></textarea>
-        <div class="row"><button class="btn" id="hB">HASH</button></div>
-        <table id="hT"></table>
-      </section>
-      <section class="panel" id="p-b64">
-        <div class="title"><span>BASE64 &raquo;</span><em>ENCODE / DECODE</em></div>
-        <textarea id="bin" placeholder="Text"></textarea>
-        <div class="row"><button class="btn" id="bE">ENCODE</button><button class="btn s" id="bD">DECODE</button></div>
-        <textarea id="bout" placeholder="Ergebnis" style="margin-top:12px" readonly></textarea>
-      </section>
-    </div>
-  </div>
-  <div class="log" id="log"><div>&gt; bereit</div></div>
-</main>
-<footer>OPSEC FINDER</footer>
+@media(max-width:760px){.shell{grid-template-columns:1fr}nav{max-height:240px;border-right:0;border-bottom:1px solid #fff}}
+</style></head><body>
+<header><h1 data-t="OPSEC FINDER">OPSEC FINDER</h1><div class="sub"><i></i><span id="cnt"></span></div></header>
+<main><div class="shell"><nav id="nav"></nav>
+<div class="pan"><div class="tt"><span id="mt"></span><em id="mc"></em></div>
+<textarea id="i"></textarea><input class="i" id="i2" style="display:none">
+<div class="row"><button class="b" id="go">RUN</button><button class="b s" id="cp">COPY</button></div>
+<pre id="o"></pre></div></div></main>
 <script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.11.14/bundle/libphonenumber-max.js"></script>
 <script>
-var $=function(i){return document.getElementById(i)};
-function esc(s){return String(s==null||s===""?"-":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function fill(id,rows){$(id).innerHTML=rows.map(function(r){return "<tr"+(r[2]?' class="hi"':"")+"><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>"}).join("")}
-function say(id,t,e){var m=$(id);m.className="msg"+(e?" err":"");m.textContent=t}
-function log(t){var l=$("log"),d=document.createElement("div"),n=new Date().toLocaleTimeString("de-DE");d.innerHTML="<b>"+n+"</b> &gt; "+esc(t);l.appendChild(d);l.scrollTop=l.scrollHeight}
-function enter(i,b){$(i).addEventListener("keydown",function(e){if(e.key==="Enter")$(b).click()})}
+const M=[],TE=new TextEncoder(),TD=new TextDecoder(),$=i=>document.getElementById(i);
+const add=(c,n,f,h,h2)=>M.push({c,n,f,h,h2});
+const T=o=>Object.entries(o).map(([k,v])=>k.padEnd(16)+(v??"-")).join("\n");
+const J=async u=>{const r=await fetch(u);if(!r.ok)throw"No data ("+r.status+")";return r.json()};
+const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,0)).join("");
+const B=u=>btoa(String.fromCharCode(...u)),UB=s=>Uint8Array.from(atob(s.trim()),c=>c.charCodeAt(0));
+const rnd=n=>crypto.getRandomValues(new Uint8Array(n)),W=s=>s.match(/[A-Za-zÀ-ÿ0-9]+/g)||[];
+const L=s=>s.split("\n"),X=(s,r)=>(s.match(r)||[]).join("\n")||"-";
+const ip2n=s=>s.trim().split(".").reduce((a,b)=>a*256+ +b,0),n2ip=n=>[24,16,8,0].map(i=>n>>>i&255).join(".");
+const ipq=async s=>{const d=await J("https://ipwho.is/"+encodeURIComponent(s.trim()));if(!d.success)throw d.message;return d};
 
-$("nav").addEventListener("click",function(e){
-  var b=e.target.closest("button");if(!b)return;
-  document.querySelectorAll("nav button,.panel").forEach(function(x){x.classList.remove("on")});
-  b.classList.add("on");$("p-"+b.dataset.p).classList.add("on");
-});
+// CATEGORIES
+const NE="NET",EN="ENCODE",CR="CRYPTO",TX="TEXT",DV="DEV",NR="NUMBER",BR="BROWSER",OS="OSINT",SEC="SECURITY",WEB="WEB/API",MAT="MATH/DATA";
 
-function ipRows(d){
-  var c=d.connection||{},tz=d.timezone||{};
-  return [
-    ["IP",esc(d.ip)],
-    ["TYP",esc(d.type)],
-    ["LAND",esc(d.country)+" ("+esc(d.country_code)+")",1],
-    ["REGION",esc(d.region)],
-    ["STADT",esc(d.city),1],
-    ["PLZ",esc(d.postal)],
-    ["KOORDINATEN",esc(d.latitude)+", "+esc(d.longitude)],
-    ["ANBIETER",esc(c.isp),1],
-    ["ORGANISATION",esc(c.org)],
-    ["ASN",esc(c.asn)],
-    ["DOMAIN",esc(c.domain)],
-    ["ZEITZONE",esc(tz.id)+" ("+esc(tz.utc)+")"],
-    ["WÄHRUNG",esc((d.currency||{}).code)],
-    ["VORWAHL","+"+esc(d.calling_code)]
-  ];
+// --- NET & IP ---
+add(NE,"IP FIND",async s=>{const d=await ipq(s),c=d.connection||{};return T({IP:d.ip,TYPE:d.type,COUNTRY:d.country+" ("+d.country_code+")",REGION:d.region,CITY:d.city,ZIP:d.postal,COORDS:d.latitude+", "+d.longitude,ISP:c.isp,ORG:c.org,ASN:c.asn,DOMAIN:c.domain,TIMEZONE:(d.timezone||{}).id,MAP:"https://www.openstreetmap.org/?mlat="+d.latitude+"&mlon="+d.longitude})},"IP Address");
+add(NE,"MY IP",async()=>T(await ipq("").then(d=>({IP:d.ip,CITY:d.city,COUNTRY:d.country,ISP:(d.connection||{}).isp}))),0);
+add(NE,"IP ISP",async s=>(await ipq(s)).connection.isp,"IP Address");
+add(NE,"IP LOCATION",async s=>{const d=await ipq(s);return d.city+", "+d.region+", "+d.country},"IP Address");
+add(NE,"IP ASN",async s=>{const c=(await ipq(s)).connection;return "AS"+c.asn+" "+c.org},"IP Address");
+const dns=t=>async s=>{const d=await J("https://dns.google/resolve?name="+encodeURIComponent(s.trim())+"&type="+t);if(!d.Answer)throw"No entries found";return d.Answer.map(a=>a.data+"  (TTL "+a.TTL+")").join("\n")};
+["A","AAAA","MX","NS","TXT","CNAME","SOA","CAA","DS","DNSKEY"].forEach(t=>add(NE,"DNS "+t,dns(t),"Domain"));
+add(NE,"REVERSE DNS",s=>dns("PTR")(s.trim().split(".").reverse().join(".")+".in-addr.arpa"),"IPv4");
+const rd=async s=>J("https://rdap.org/domain/"+encodeURIComponent(s.trim().toLowerCase().replace(/^https?:\/\//,"").replace(/\/.*/,"")));
+const ev=d=>Object.fromEntries((d.events||[]).map(e=>[e.eventAction,e.eventDate.slice(0,10)]));
+add(NE,"DOMAIN WHOIS",async s=>{const d=await rd(s),e=ev(d);return T({DOMAIN:d.ldhName,REGISTERED:e.registration,UPDATED:e["last changed"],EXPIRES:e.expiration,STATUS:(d.status||[]).join(", "),NAMESERVERS:(d.nameservers||[]).map(n=>n.ldhName).join(", ")})},"Domain");
+add(NE,"DOMAIN AGE",async s=>{const e=ev(await rd(s)).registration;if(!e)throw"No date found";const d=(Date.now()-new Date(e))/864e5;return e+"\n"+Math.floor(d/365.25)+" years, "+Math.floor(d%365.25/30.44)+" months ("+Math.floor(d)+" days)"},"Domain");
+add(NE,"IP RDAP",async s=>{const d=await J("https://rdap.org/ip/"+s.trim());return T({NAME:d.name,HANDLE:d.handle,FROM:d.startAddress,TO:d.endAddress,COUNTRY:d.country,TYPE:d.type})},"IP Address");
+add(NE,"IP > DECIMAL",s=>ip2n(s),"IP Address");
+add(NE,"DECIMAL > IP",s=>n2ip(+s),"Number");
+add(NE,"IP > BINARY",s=>s.trim().split(".").map(x=>(+x).toString(2).padStart(8,0)).join("."),"IP Address");
+add(NE,"IP > HEX",s=>s.trim().split(".").map(x=>(+x).toString(16).padStart(2,0)).join(""),"IP Address");
+add(NE,"IP PRIVATE?",s=>/^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|127\.|169\.254\.)/.test(s.trim())?"PRIVATE / LOCAL":"PUBLIC","IP-Address");
+add(NE,"CIDR CALCULATOR",s=>{const[ip,m]=s.trim().split("/"),n=ip2n(ip),k=m==0?0:~0<<32-m>>>0,a=(n&k)>>>0,b=(a|~k)>>>0;return T({NET:n2ip(a),BROADCAST:n2ip(b),MASK:n2ip(k),FIRST:n2ip(a+1),LAST:n2ip(b-1),HOSTS:Math.max(0,2**(32-m)-2)})},"192.168.0.0/24");
+add(NE,"URL PARSER",s=>{const u=new URL(s.trim());return T({PROTOCOL:u.protocol,HOST:u.hostname,PORT:u.port,PATH:u.pathname,QUERY:u.search,HASH:u.hash})},"URL");
+const PT="21 FTP;22 SSH;23 Telnet;25 SMTP;53 DNS;67 DHCP;80 HTTP;110 POP3;123 NTP;143 IMAP;161 SNMP;389 LDAP;443 HTTPS;445 SMB;465 SMTPS;587 SMTP Submission;993 IMAPS;995 POP3S;1433 MSSQL;3306 MySQL;3389 RDP;5432 PostgreSQL;5900 VNC;6379 Redis;8080 HTTP-Alt;27017 MongoDB".split(";");
+add(NE,"PORT INFO",s=>PT.filter(x=>x.startsWith(s.trim()+" ")||(!s.trim()&&1)).join("\n")||"Unknown","Port (empty = all)");
+const HS="200 OK;201 Created;204 No Content;301 Moved Permanently;302 Found;304 Not Modified;400 Bad Request;401 Unauthorized;403 Forbidden;404 Not Found;405 Method Not Allowed;408 Timeout;418 I'm a teapot;429 Too Many Requests;500 Internal Server Error;502 Bad Gateway;503 Service Unavailable;504 Gateway Timeout".split(";");
+add(NE,"HTTP STATUS",s=>HS.filter(x=>x.startsWith(s.trim())).join("\n")||"Unknown","Code (e.g. 404)");
+
+// --- ENCODING ---
+add(EN,"BASE64 ENC",s=>B(TE.encode(s)));
+add(EN,"BASE64 DEC",s=>TD.decode(UB(s)));
+add(EN,"URL ENC",s=>encodeURIComponent(s));
+add(EN,"URL DEC",s=>decodeURIComponent(s));
+add(EN,"HEX ENC",s=>hex(TE.encode(s)).replace(/../g,"$& ").trim());
+add(EN,"HEX DEC",s=>TD.decode(Uint8Array.from(s.replace(/\s/g,"").match(/../g),x=>parseInt(x,16))));
+add(EN,"BINARY ENC",s=>[...TE.encode(s)].map(x=>x.toString(2).padStart(8,0)).join(" "));
+add(EN,"BINARY DEC",s=>TD.decode(Uint8Array.from(s.trim().split(/\s+/),x=>parseInt(x,2))));
+add(EN,"ROT13",s=>s.replace(/[a-z]/gi,c=>String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26)));
+add(EN,"ROT47",s=>s.replace(/[!-~]/g,c=>String.fromCharCode(33+(c.charCodeAt(0)+14)%94)));
+add(EN,"CAESAR",(s,k)=>s.replace(/[a-z]/gi,c=>{const b=c<"a"?65:97;return String.fromCharCode((c.charCodeAt(0)-b+(+k||3)+26)%26+b)}),"Text","Shift (Default 3)");
+add(EN,"ATBASH",s=>s.replace(/[a-z]/gi,c=>{const b=c<"a"?65:97;return String.fromCharCode(b+25-(c.charCodeAt(0)-b))}));
+const K="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",MC=".-,-...,-.-.,-..,.,..-.,--.,....,..,.---,-.-,.-..,--,-.,---,.--.,--.-,.-.,...,-,..-,...-,.--,-..-,-.--,--..,-----,.----,..---,...--,....-,.....,-....,--...,---..,----.".split(",");
+add(EN,"MORSE ENC",s=>[...s.toUpperCase()].map(c=>c==" "?"/":MC[K.indexOf(c)]||"").join(" "));
+add(EN,"MORSE DEC",s=>s.trim().split(" ").map(c=>c=="/"?" ":K[MC.indexOf(c)]||"").join(""));
+add(EN,"HTML ENC",s=>s.replace(/[&<>"']/g,c=>"&#"+c.charCodeAt(0)+";"));
+add(EN,"HTML DEC",s=>{const e=document.createElement("textarea");e.innerHTML=s;return e.value});
+add(EN,"UNICODE ESC",s=>[...s].map(c=>"\\u"+c.charCodeAt(0).toString(16).padStart(4,0)).join(""));
+add(EN,"UNICODE UNESC",s=>s.replace(/\\u([0-9a-f]{4})/gi,(_,h)=>String.fromCharCode(parseInt(h,16))));
+add(EN,"BASE32 ENC",s=>(([...TE.encode(s)].map(x=>x.toString(2).padStart(8,0)).join("")).match(/.{1,5}/g)||[]).map(x=>"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[parseInt(x.padEnd(5,0),2)]).join(""));
+add(EN,"LEET",s=>s.replace(/[aeiost]/gi,c=>({a:4,e:3,i:1,o:0,s:5,t:7})[c.toLowerCase()]));
+const NA="Alfa Bravo Charlie Delta Echo Foxtrot Golf Hotel India Juliett Kilo Lima Mike November Oscar Papa Quebec Romeo Sierra Tango Uniform Victor Whiskey Xray Yankee Zulu".split(" ");
+add(EN,"NATO ALPHABET",s=>[...s.toUpperCase()].map(c=>NA[c.charCodeAt(0)-65]||c).join(" "));
+
+// --- CRYPTO & HASH ---
+const sha=a=>async s=>hex(await crypto.subtle.digest(a,TE.encode(s)));
+["SHA-1","SHA-256","SHA-384","SHA-512"].forEach(a=>add(CR,a,sha(a)));
+add(CR,"CRC32",s=>{let c,t=[],r=-1;for(let n=0;n<256;n++){c=n;for(let k=0;k<8;k++)c=c&1?3988292384^c>>>1:c>>>1;t[n]=c}for(const b of TE.encode(s))r=r>>>8^t[(r^b)&255];return((r^-1)>>>0).toString(16).padStart(8,0)});
+add(CR,"FNV-1A",s=>{let h=2166136261;for(const b of TE.encode(s)){h^=b;h=Math.imul(h,16777619)}return(h>>>0).toString(16)});
+add(CR,"HMAC-SHA256",async(s,k)=>{const y=await crypto.subtle.importKey("raw",TE.encode(k),{name:"HMAC",hash:"SHA-256"},false,["sign"]);return hex(await crypto.subtle.sign("HMAC",y,TE.encode(s)))},"Text","Secret Key");
+const key=async(p,salt)=>{const m=await crypto.subtle.importKey("raw",TE.encode(p),"PBKDF2",false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:200000,hash:"SHA-256"},m,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])};
+add(CR,"AES ENCRYPT",async(s,p)=>{const a=rnd(16),i=rnd(12),c=await crypto.subtle.encrypt({name:"AES-GCM",iv:i},await key(p,a),TE.encode(s));return B([...a,...i,...new Uint8Array(c)])},"Text","Password");
+add(CR,"AES DECRYPT",async(s,p)=>{const u=UB(s);return TD.decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:u.slice(16,28)},await key(p,u.slice(0,16)),u.slice(28)))},"Encrypted Text","Password");
+add(CR,"JWT DECODE",s=>s.trim().split(".").slice(0,2).map(p=>JSON.stringify(JSON.parse(TD.decode(UB(p.replace(/-/g,"+").replace(/_/g,"/")))),null,2)).join("\n\n"),"JWT Token");
+add(CR,"UUID",()=>crypto.randomUUID(),0);
+const SET="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*-_=+?";
+const pw=n=>Array.from(rnd(n),x=>SET[x%SET.length]).join("");
+add(CR,"PASSWORD GEN",(s,n)=>pw(+n||20),0,"Length (Default 20)");
+add(CR,"5 PASSWORDS",(s,n)=>[1,2,3,4,5].map(()=>pw(+n||20)).join("\n"),0,"Length (Default 20)");
+add(CR,"PIN GEN",(s,n)=>Array.from(rnd(+n||6),x=>x%10).join(""),0,"Digits (Default 6)");
+add(CR,"ENTROPY",s=>{const p=(/[a-z]/.test(s)*26)+(/[A-Z]/.test(s)*26)+(/\d/.test(s)*10)+(/[^\w]/.test(s)*33),b=Math.round(s.length*Math.log2(p||1));return b+" Bits — "+(b<40?"WEAK":b<60?"MODERATE":b<80?"GOOD":"STRONG")},"Password");
+add(CR,"RANDOM HEX",(s,n)=>hex(rnd(+n||16)),0,"Bytes (Default 16)");
+add(CR,"RANDOM BASE64",(s,n)=>B(rnd(+n||16)),0,"Bytes (Default 16)");
+add(CR,"RANDOM NUMBER",(s,m)=>{const[a,b]=(m||"1-100").split("-").map(Number);return a+rnd(4).reduce((x,y)=>x*256+y,0)%(b-a+1)},0,"Range (Default 1-100)");
+
+// --- TEXT & ANALYSIS ---
+add(TX,"UPPERCASE",s=>s.toUpperCase());
+add(TX,"LOWERCASE",s=>s.toLowerCase());
+add(TX,"TITLE CASE",s=>s.toLowerCase().replace(/(^|\s)\S/g,c=>c.toUpperCase()));
+add(TX,"CAMELCASE",s=>W(s).map((x,i)=>i?x[0].toUpperCase()+x.slice(1).toLowerCase():x.toLowerCase()).join(""));
+add(TX,"SNAKE_CASE",s=>W(s).join("_").toLowerCase());
+add(TX,"KEBAB-CASE",s=>W(s).join("-").toLowerCase());
+add(TX,"COUNT CHARS",s=>[...s].length);
+add(TX,"COUNT WORDS",s=>s.trim()?s.trim().split(/\s+/).length:0);
+add(TX,"COUNT LINES",s=>L(s).length);
+add(TX,"SORT LINES",s=>L(s).sort((a,b)=>a.localeCompare(b)).join("\n"));
+add(TX,"REMOVE DUPLICATES",s=>[...new Set(L(s))].join("\n"));
+add(TX,"REVERSE LINES",s=>L(s).reverse().join("\n"));
+add(TX,"REMOVE EMPTY LINES",s=>L(s).filter(x=>x.trim()).join("\n"));
+add(TX,"REMOVE SPACES",s=>s.replace(/\s+/g,""));
+add(TX,"REMOVE ACCENTS",s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,""));
+add(TX,"SLUGIFY",s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""));
+add(TX,"EXTRACT EMAILS",s=>X(s,/[\w.+-]+@[\w-]+\.[\w.-]+/g));
+add(TX,"EXTRACT URLS",s=>X(s,/https?:\/\/[^\s"'<>]+/g));
+add(TX,"EXTRACT IPS",s=>X(s,/\b(?:\d{1,3}\.){3}\d{1,3}\b/g));
+add(TX,"REPLACE",(s,r)=>{const[a,b]=r.split("=>");return s.split(a).join(b??"")},"Text","search=>replace");
+add(TX,"SHUFFLE LINES",s=>L(s).map(v=>[rnd(1)[0],v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join("\n"));
+add(TX,"NUMBER LINES",s=>L(s).map((x,i)=>i+1+". "+x).join("\n"));
+const ZW=/[\u200b-\u200f\u202a-\u202e\u2060-\u2064\ufeff]/g;
+add(TX,"ZERO-WIDTH CHECK",s=>{const m=s.match(ZW);return m?m.length+" invisible characters found":"None found"});
+add(TX,"REMOVE ZERO-WIDTH",s=>s.replace(ZW,""));
+add(TX,"PALINDROME?",s=>{const t=s.toLowerCase().replace(/[^a-z0-9äöüß]/g,"");return t&&t==[...t].reverse().join("")?"YES":"NO"});
+add(TX,"ASCII CODES",s=>[...s].map(c=>c.charCodeAt(0)).join(" "));
+add(TX,"REVERSE TEXT",s=>[...s].reverse().join(""));
+
+// --- DEV & TOOLS ---
+add(DV,"JSON FORMAT",s=>JSON.stringify(JSON.parse(s),null,2));
+add(DV,"JSON MINIFY",s=>JSON.stringify(JSON.parse(s)));
+add(DV,"JSON CHECK",s=>{JSON.parse(s);return"VALID"});
+add(DV,"CSV > JSON",s=>{const r=L(s.trim()).map(l=>l.split(","));return JSON.stringify(r.slice(1).map(x=>Object.fromEntries(r[0].map((k,i)=>[k,x[i]]))),null,2)});
+add(DV,"QUERY > JSON",s=>JSON.stringify(Object.fromEntries(new URLSearchParams(s.trim().replace(/^.*\?/,""))),null,2));
+add(DV,"TIMESTAMP > DATE",s=>{const d=new Date(+s<1e12?s*1000:+s);return d.toISOString()+"\n"+d.toLocaleString()},"Unix Time");
+add(DV,"DATE > TIMESTAMP",s=>Math.floor(new Date(s)/1000),"2026-11-16 12:00");
+add(DV,"NOW",()=>new Date().toISOString()+"\n"+Math.floor(Date.now()/1000),0);
+add(DV,"REGEX TEST",(s,r)=>X(s,new RegExp(r,"g")),"Text","Regex Pattern");
+add(DV,"HEX > RGB",s=>"rgb("+s.replace("#","").match(/../g).map(x=>parseInt(x,16))+")","#ff8800");
+add(DV,"RGB > HEX",s=>"#"+s.match(/\d+/g).slice(0,3).map(x=>(+x).toString(16).padStart(2,0)).join(""),"255,136,0");
+add(DV,"CHMOD PARser",s=>[...s.trim()].map(d=>[0,1,2].map(i=>d&4>>i?"rwx"[i]:"-").join("")).join(""),"755");
+
+// --- NUMBER & PHONE ---
+const ph=s=>{const p=libphonenumber.parsePhoneNumberFromString(s.trim());if(!p||!p.isPossible())throw"Invalid number";return p};
+add(NR,"NUMBER INFO",s=>{const p=ph(s);return T({INTERNATIONAL:p.formatInternational(),NATIONAL:p.formatNational(),"E.164":p.number,COUNTRY:p.country+" (+"+p.countryCallingCode+")",VALID:p.isValid()?"yes":"no",TYPE:p.getType()})},"+49 151 12345678");
+add(NR,"NUMBER E.164",s=>ph(s).number,"Phone Number");
+
+// --- BROWSER & SYSTEM ---
+add(BR,"MY BROWSER",()=>{const n=navigator;return T({BROWSER:n.userAgent,LANGUAGES:(n.languages||[]).join(", "),PLATFORM:n.platform,CORES:n.hardwareConcurrency,RAM_GB:n.deviceMemory,TIMEZONE:Intl.DateTimeFormat().resolvedOptions().timeZone,COOKIES:n.cookieEnabled,DNT:n.doNotTrack,ONLINE:n.onLine})},0);
+add(BR,"SCREEN INFO",()=>T({RESOLUTION:screen.width+"x"+screen.height,WINDOW:innerWidth+"x"+innerHeight,PIXELRATIO:devicePixelRatio,COLORDEPTH:screen.colorDepth,DARKMODE:matchMedia("(prefers-color-scheme:dark)").matches}),0);
+add(BR,"WORLD CLOCK",()=>["UTC","Europe/London","Europe/Berlin","America/New_York","America/Los_Angeles","Asia/Dubai","Asia/Tokyo","Australia/Sydney"].map(z=>z.padEnd(22)+new Date().toLocaleString("en-US",{timeZone:z})).join("\n"),0);
+
+// --- OSINT & RECON ---
+add(OS,"USERNAME CHECK",async s=>{const u=encodeURIComponent(s.trim());const sites=[{n:"GitHub",u:"https://github.com/"+u},{n:"Twitter/X",u:"https://twitter.com/"+u},{n:"Instagram",u:"https://instagram.com/"+u},{n:"Reddit",u:"https://reddit.com/user/"+u}];return sites.map(x=>x.n.padEnd(12)+": "+x.u).join("\n")},"Username");
+add(OS,"MAILDOMAIN MX CHECK",async s=>dns("MX")(s.trim().replace(/^.*@/,"")),"Email or Domain");
+add(OS,"SUBDOMAIN HINTS",s=>{const d=s.trim();return["www."+d,"mail."+d,"webmail."+d,"ftp."+d,"admin."+d,"test."+d,"vpn."+d,"api."+d,"dev."+d,"portal."+d].join("\n")},"Domain");
+add(OS,"GOOGLE DORK GEN",s=>{const q=s.trim();return T({SITE:"site:"+q,FILETYPE:"filetype:pdf "+q,INTITLE:"intitle:\"index of\" "+q,INTEXT:"intext:\"confidential\" "+q,CACHE:"cache:"+q})},"Query / Domain");
+
+// --- SECURITY & PRIVACY ---
+add(SEC,"HEADERS CHEAT",()=>"Strict-Transport-Security: Enforce HSTS\nContent-Security-Policy: Prevent XSS\nX-Frame-Options: Prevent Clickjacking\nX-Content-Type-Options: Prevent MIME sniffing\nPermissions-Policy: Restrict APIs",0);
+add(SEC,"PRIVACY CHECKLIST",()=>"1. Enable 2FA everywhere (prefer App/FIDO2 over SMS)\n2. Generate passwords via a password manager\n3. Use DNS-over-HTTPS (DoH) / VPN\n4. Minimize browser fingerprinting (uBlock Origin)\n5. Strip photo metadata before uploading",0);
+add(SEC,"USER-AGENT SPOOF",()=>"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\nMozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2.1 Safari/605.1.15",0);
+add(SEC,"PERMISSIONS POLICY",()=>"geolocation=(), microphone=(), camera=(), usb=(), payment=()",0);
+
+// --- WEB & API ---
+add(WEB,"CURL TEMPLATE",s=>"curl -X POST '"+(s.trim()||"https://api.example.com")+"' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Authorization: Bearer YOUR_TOKEN' \\\n  -d '{\"key\":\"value\"}'","URL");
+add(WEB,"FETCH JS TEMPLATE",s=>"fetch('"+(s.trim()||"https://api.example.com")+"', {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ key: 'value' })\n}).then(r => r.json()).then(console.log);","URL");
+add(WEB,"HTML ENTITY MAP",()=>"&amp; -> &\n&lt; -> <\n&gt; -> >\n&quot; -> \"\n&#39; -> '\n&nbsp; -> Space",0);
+add(WEB,"STATUS CODE LIST",()=>"2xx Success (200, 201)\n3xx Redirection (301, 302, 304)\n4xx Client Error (400, 401, 403, 404, 429)\n5xx Server Error (500, 502, 503, 504)",0);
+
+// --- MATH & DATA ---
+add(MAT,"DEC > BIN/OCT/HEX",s=>T({BIN:(+s).toString(2),OCT:(+s).toString(8),HEX:(+s).toString(16)}),"Number");
+add(MAT,"BIN > DEC",s=>parseInt(s,2),"Binary Number");
+add(MAT,"HEX > DEC",s=>parseInt(s,16),"Hex Number");
+add(MAT,"ROMAN NUMERAL",s=>{let n=+s,o="";for(const[v,r]of[[1000,"M"],[900,"CM"],[500,"D"],[400,"CD"],[100,"C"],[90,"XC"],[50,"L"],[40,"XL"],[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]])while(n>=v){o+=r;n-=v}return o},"Number");
+add(MAT,"HUMAN BYTES",s=>{const n=+s,i=Math.max(0,Math.min(5,Math.floor(Math.log(n)/Math.log(1024))));return(n/1024**i).toFixed(2)+" "+["B","KB","MB","GB","TB","PB"][i]},"Bytes");
+add(MAT,"SECONDS > TIME",s=>{const n=+s;return Math.floor(n/86400)+"d "+Math.floor(n%86400/3600)+"h "+Math.floor(n%3600/60)+"m "+n%60+"s"},"Seconds");
+add(MAT,"AGE CALCULATOR",s=>{const d=(Date.now()-new Date(s))/864e5;return Math.floor(d/365.25)+" years ("+Math.floor(d)+" days)"},"Birthdate YYYY-MM-DD");
+add(MAT,"DAYS UNTIL",s=>Math.ceil((new Date(s)-Date.now())/864e5)+" days","Date YYYY-MM-DD");
+
+// UI LOGIC
+let cur;
+const nav=$("nav"),cats=[...new Set(M.map(m=>m.c))];
+$("cnt").textContent=M.length+" MODULES · "+cats.length+" CATEGORIES";
+function build(f){
+  nav.innerHTML='<input id="q" placeholder="SEARCH..." value="'+f+'">';
+  cats.forEach(c=>{const l=M.filter(m=>m.c==c&&m.n.toLowerCase().includes(f.toLowerCase()));if(!l.length)return;
+    const h=document.createElement("div");h.className="cat";h.textContent=c+" ["+l.length+"]";nav.appendChild(h);
+    l.forEach(m=>{const b=document.createElement("button");b.textContent=m.n;if(m==cur)b.className="on";b.onclick=()=>pick(m);nav.appendChild(b)})});
+  const q=$("q");q.oninput=()=>{build(q.value);$("q").focus();$("q").setSelectionRange(99,99)}
 }
-async function ipLookup(v,msgId,tblId,mapId){
-  say(msgId,"suche...");$(tblId).innerHTML="";if(mapId)$(mapId).innerHTML="";
-  try{
-    var r=await fetch("https://ipwho.is/"+encodeURIComponent(v));
-    var d=await r.json();
-    if(!d.success){say(msgId,d.message||"Fehler",1);return null}
-    say(msgId,"");fill(tblId,ipRows(d));
-    if(mapId&&d.latitude!=null){
-      var la=d.latitude,lo=d.longitude,k=0.06;
-      $(mapId).innerHTML='<iframe src="https://www.openstreetmap.org/export/embed.html?bbox='+(lo-k)+'%2C'+(la-k/2)+'%2C'+(lo+k)+'%2C'+(la+k/2)+'&layer=mapnik&marker='+la+'%2C'+lo+'"></iframe>';
-    }
-    log("IP "+d.ip+" → "+(d.city||"?")+", "+(d.country_code||"?")+" / "+((d.connection||{}).isp||"?"));
-    return d;
-  }catch(e){say(msgId,"Abfrage fehlgeschlagen",1);return null}
-}
-$("ipB").onclick=function(){ipLookup($("ip").value.trim(),"ipM","ipT","ipMap")};
-enter("ip","ipB");
-
-$("meB").onclick=async function(){
-  var d=await ipLookup("","meM","meT");
-  if(!d)return;
-  var n=navigator,s=screen,rows=ipRows(d);
-  rows.push(["BROWSER",esc(n.userAgent)]);
-  rows.push(["SPRACHE",esc((n.languages||[n.language]).join(", "))]);
-  rows.push(["PLATTFORM",esc(n.platform)]);
-  rows.push(["CPU KERNE",esc(n.hardwareConcurrency)]);
-  rows.push(["RAM (GB)",esc(n.deviceMemory)]);
-  rows.push(["BILDSCHIRM",s.width+" x "+s.height+" @"+window.devicePixelRatio+"x"]);
-  rows.push(["ZEITZONE (BROWSER)",esc(Intl.DateTimeFormat().resolvedOptions().timeZone)]);
-  rows.push(["DO NOT TRACK",esc(n.doNotTrack)]);
-  rows.push(["COOKIES",n.cookieEnabled?"an":"aus"]);
-  rows.push(["ONLINE",n.onLine?"ja":"nein"]);
-  fill("meT",rows);
-};
-
-var DE={
-"0151":"Telekom","0160":"Telekom","0170":"Telekom","0171":"Telekom","0175":"Telekom",
-"0152":"Vodafone","0162":"Vodafone","0172":"Vodafone","0173":"Vodafone","0174":"Vodafone",
-"0155":"1&1","0157":"E-Plus / O2","0159":"E-Plus / O2","0163":"E-Plus / O2","0177":"E-Plus / O2","0178":"E-Plus / O2",
-"0176":"O2 Telefonica","0179":"O2 Telefonica"
-};
-$("telB").onclick=function(){
-  var v=$("tel").value.trim();$("telT").innerHTML="";say("telM","");
-  var p=libphonenumber.parsePhoneNumberFromString(v,"DE");
-  if(!p||!p.isPossible()){say("telM","Ungültige Nummer",1);return}
-  var prov="-";
-  if(p.country==="DE")prov=DE[("0"+p.nationalNumber).slice(0,4)]||"-";
-  fill("telT",[
-    ["NUMMER",esc(p.formatInternational())],
-    ["NATIONAL",esc(p.formatNational())],
-    ["E.164",esc(p.number)],
-    ["LAND",esc(p.country)+" (+"+esc(p.countryCallingCode)+")",1],
-    ["GÜLTIG",p.isValid()?"ja":"nein"],
-    ["TYP",esc(p.getType()),1],
-    ["ANBIETER",esc(prov),1]
-  ]);
-  log("NUMBER "+p.number+" → "+prov);
-};
-enter("tel","telB");
-
-var DT={1:"A",2:"NS",5:"CNAME",6:"SOA",15:"MX",16:"TXT",28:"AAAA"};
-$("dnsB").onclick=async function(){
-  var v=$("dns").value.trim(),t=$("dnsType").value;$("dnsT").innerHTML="";
-  if(!v){say("dnsM","Domain eingeben",1);return}
-  say("dnsM","suche...");
-  try{
-    var r=await fetch("https://dns.google/resolve?name="+encodeURIComponent(v)+"&type="+t);
-    var d=await r.json();
-    if(!d.Answer){say("dnsM","Keine Einträge",1);return}
-    say("dnsM","");
-    fill("dnsT",d.Answer.map(function(a){return [esc(DT[a.type]||a.type)+" · TTL "+a.TTL,esc(a.data)]}));
-    log("DNS "+t+" "+v+" → "+d.Answer.length+" Einträge");
-  }catch(e){say("dnsM","Abfrage fehlgeschlagen",1)}
-};
-enter("dns","dnsB");
-
-function ageOf(iso){
-  var ms=Date.now()-new Date(iso).getTime(),y=Math.floor(ms/31557600000),m=Math.floor(ms%31557600000/2629800000);
-  return y+" Jahre, "+m+" Monate";
-}
-$("domB").onclick=async function(){
-  var v=$("dom").value.trim().toLowerCase().replace(/^https?:\/\//,"").replace(/\/.*$/,"");$("domT").innerHTML="";
-  if(!v){say("domM","Domain eingeben",1);return}
-  say("domM","suche...");
-  try{
-    var r=await fetch("https://rdap.org/domain/"+encodeURIComponent(v));
-    if(!r.ok){say("domM","Keine Daten gefunden",1);return}
-    var d=await r.json(),ev={};
-    (d.events||[]).forEach(function(e){ev[e.eventAction]=e.eventDate});
-    var ns=(d.nameservers||[]).map(function(n){return n.ldhName}).join("<br>");
-    var rows=[["DOMAIN",esc(d.ldhName)]];
-    if(ev.registration)rows.push(["REGISTRIERT",esc(ev.registration.slice(0,10)),1],["ALTER",ageOf(ev.registration),1]);
-    if(ev["last changed"])rows.push(["GEÄNDERT",esc(ev["last changed"].slice(0,10))]);
-    if(ev.expiration)rows.push(["LÄUFT AB",esc(ev.expiration.slice(0,10))]);
-    rows.push(["STATUS",esc((d.status||[]).join(", "))]);
-    rows.push(["NAMESERVER",ns||"-"]);
-    say("domM","");fill("domT",rows);
-    log("DOMAIN "+v+" → "+(ev.registration?ev.registration.slice(0,10):"?"));
-  }catch(e){say("domM","Abfrage fehlgeschlagen",1)}
-};
-enter("dom","domB");
-
-$("hB").onclick=async function(){
-  var t=new TextEncoder().encode($("hin").value),rows=[];
-  for(var a of ["SHA-1","SHA-256","SHA-384","SHA-512"]){
-    var h=await crypto.subtle.digest(a,t);
-    rows.push([a,Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,"0")}).join("")]);
-  }
-  fill("hT",rows);log("HASH berechnet");
-};
-
-$("bE").onclick=function(){
-  var b=new TextEncoder().encode($("bin").value),s="";
-  b.forEach(function(x){s+=String.fromCharCode(x)});
-  $("bout").value=btoa(s);
-};
-$("bD").onclick=function(){
-  try{
-    var s=atob($("bin").value.trim()),a=new Uint8Array(s.length);
-    for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);
-    $("bout").value=new TextDecoder().decode(a);
-  }catch(e){$("bout").value="Ungültiges Base64"}
-};
-</script>
-</body>
-</html>
+function pick(m){cur=m;$("mt").textContent=m.n+" »";$("mc").textContent=m.c;
+  $("i").style.display=m.h===0?"none":"block";$("i").placeholder=m.h||"Input";
+  $("i2").style.display=m.h2?"block":"none";$("i2").placeholder=m.h2||"";$("o").textContent="";$("o").className="";
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.textContent==m.n))}
+async function run(){const o=$("o");o.className="";o.textContent="...";
+  try{o.textContent=String(await cur.f($("i").value,$("i2").value))}catch(e){o.className="err";o.textContent="ERROR: "+(e.message||e)}}
+$("go").onclick=run;
+$("cp").onclick=()=>navigator.clipboard.writeText($("o").textContent);
+$("i").addEventListener("keydown",e=>{if(e.key=="Enter"&&e.ctrlKey)run()});
+$("i2").addEventListener("keydown",e=>{if(e.key=="Enter")run()});
+build("");pick(M[0]);
+</script></body></html>
