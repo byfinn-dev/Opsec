@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OPSEC FINDER // PRO</title>
 <style>
-:root{--g:#8a8a8a;--d:#2a2a2a;--r:#ff2a2a;--acc:#3cf}
+:root{--g:#8a8a8a;--d:#2a2a2a;--r:#ff2a2a;--acc:#3cf;--ok:#3f9}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#000 url(bg.jpg) center/cover fixed;color:#fff;font:14px "Courier New",monospace;padding:24px 12px 40px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
 body:before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse,rgba(0,0,0,.5),rgba(0,0,0,.93))}
-body:after{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);pointer-events:none}
+body:after{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);pointer-events:none;z-index:50}
 header,main{position:relative;z-index:2;width:100%;max-width:1100px}
 header{text-align:center;margin-bottom:22px}
 h1{font-size:clamp(30px,7vw,64px);letter-spacing:.3em;padding-left:.3em;font-weight:900;position:relative;display:inline-block;text-shadow:0 0 18px #fff6}
@@ -17,157 +17,240 @@ h1:after{color:var(--acc);clip-path:inset(58% 0 0 0);animation:b 2.6s infinite s
 .sub{margin-top:10px;font-size:12px;letter-spacing:.4em;color:var(--g)}
 .sub i{display:inline-block;width:8px;height:8px;background:var(--r);border-radius:50%;margin-right:10px;animation:k 1s infinite}
 @keyframes k{50%{opacity:.15}}
-.shell{display:grid;grid-template-columns:250px 1fr;border:1px solid #fff;background:rgba(0,0,0,.82);backdrop-filter:blur(4px);box-shadow:0 0 40px #fff1}
+.shell{display:grid;grid-template-columns:260px 1fr;border:1px solid #fff;background:rgba(0,0,0,.82);backdrop-filter:blur(4px);box-shadow:0 0 40px #fff1}
 nav{border-right:1px solid #fff;max-height:78vh;overflow:auto}
-#q{width:100%;border:0;border-bottom:1px solid #fff;background:#000;color:#fff;padding:13px;font:inherit;outline:0;position:sticky;top:0}
-.cat{padding:9px 13px;font-size:11px;letter-spacing:.3em;color:var(--g);background:#0c0c0c;border-bottom:1px solid var(--d);position:sticky;top:44px}
+#q{width:100%;border:0;border-bottom:1px solid #fff;background:#000;color:#fff;padding:13px;font:inherit;outline:0;position:sticky;top:0;z-index:3}
+.cat{padding:9px 13px;font-size:11px;letter-spacing:.3em;color:var(--g);background:#0c0c0c;border-bottom:1px solid var(--d)}
 nav button{display:block;width:100%;background:0;color:#fff;border:0;border-bottom:1px solid var(--d);padding:9px 13px;font:inherit;font-size:12px;text-align:left;cursor:pointer;letter-spacing:.06em}
 nav button:hover{background:#1c1c1c}nav button.on{background:#fff;color:#000}
-.pan{padding:20px}
+.pan{padding:20px;min-width:0}
+.bar{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--g);margin-bottom:12px;gap:10px}
+.bar b{color:var(--ok)}
+.bar button{background:0;border:1px solid var(--d);color:var(--g);padding:4px 10px;font:inherit;font-size:11px;cursor:pointer}
+.bar button:hover{border-color:#fff;color:#fff}
 .tt{display:flex;justify-content:space-between;border-bottom:1px solid var(--d);padding-bottom:10px;margin-bottom:14px;letter-spacing:.2em}
 .tt em{font-style:normal;color:var(--g);font-size:11px}
 textarea,input.i{width:100%;background:#000;border:1px solid #fff;color:#fff;padding:11px;font:inherit;outline:0;margin-bottom:8px}
-textarea{min-height:120px;resize:vertical}
-textarea:focus,input:focus{box-shadow:0 0 14px #fff4}
-.row{display:flex;gap:8px}
+textarea{min-height:110px;resize:vertical}
+textarea:focus,input:focus,.b:focus-visible,nav button:focus-visible{box-shadow:0 0 14px #fff4;outline:1px solid var(--acc)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
 .b{background:#fff;color:#000;border:1px solid #fff;padding:12px 22px;font:inherit;font-weight:900;letter-spacing:.15em;cursor:pointer}
 .b:hover{background:#000;color:#fff}.b.s{background:#000;color:#fff}.b.s:hover{background:#fff;color:#000}
 pre{margin-top:14px;border:1px solid var(--d);padding:14px;white-space:pre-wrap;word-break:break-all;min-height:90px;max-height:420px;overflow:auto;background:#050505;line-height:1.6}
 .err{color:var(--r)}
+#gate{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.94);display:flex;align-items:center;justify-content:center;padding:16px}
+#gate form{width:100%;max-width:380px;border:1px solid #fff;background:#000;padding:26px;box-shadow:0 0 50px #fff2}
+#gate h2{letter-spacing:.3em;font-size:18px;margin-bottom:4px}
+#gate p{color:var(--g);font-size:12px;margin-bottom:16px;line-height:1.5}
+#gmsg{min-height:20px;font-size:12px;margin:4px 0 10px;color:var(--r)}
+#gsw{background:0;border:0;color:var(--acc);font:inherit;font-size:12px;cursor:pointer;margin-top:14px;text-decoration:underline}
+.hide{display:none!important}
 @media(max-width:760px){.shell{grid-template-columns:1fr}nav{max-height:260px;border-right:0;border-bottom:1px solid #fff}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
+
+<div id="gate"><form id="gf" autocomplete="off">
+<h2 id="gt">LOGIN</h2><p id="gp">Sign in to open the toolkit.</p>
+<input class="i" id="gu" placeholder="Username" autocomplete="username" required>
+<input class="i" id="gw" type="password" placeholder="Password" autocomplete="current-password" required>
+<input class="i hide" id="gw2" type="password" placeholder="Repeat password" autocomplete="new-password">
+<div id="gmsg" role="alert"></div>
+<button class="b" id="gb" style="width:100%">SIGN IN</button>
+<button type="button" id="gsw">Create a new account</button>
+</form></div>
+
 <header><h1 data-t="OPSEC FINDER">OPSEC FINDER</h1><div class="sub"><i></i><span id="cnt"></span></div></header>
-<main><div class="shell"><nav id="nav"></nav>
+<main id="app" class="hide"><div class="bar"><span>USER: <b id="who"></b> &nbsp; <span id="clk"></span></span><button id="lo">LOGOUT</button></div>
+<div class="shell"><nav id="nav"><input id="q" placeholder="SEARCH MODULES..."><div id="list"></div></nav>
 <div class="pan"><div class="tt"><span id="mt"></span><em id="mc"></em></div>
 <textarea id="i"></textarea><input class="i" id="i2" style="display:none">
-<div class="row"><button class="b" id="go">RUN</button><button class="b s" id="cp">COPY</button></div>
+<div class="row"><button class="b" id="go">RUN</button><button class="b s" id="cp">COPY</button><button class="b s" id="clr">CLEAR</button></div>
 <pre id="o"></pre></div></div></main>
+
 <script>
-const M=[],$=i=>document.getElementById(i);
-const add=(c,n,f,h,h2)=>M.push({c,n,f,h,h2});
+const $=i=>document.getElementById(i),LS=localStorage,SS=sessionStorage;
+const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,0)).join("");
 const T=o=>Object.entries(o).map(([k,v])=>k.padEnd(14)+(v??"-")).join("\n");
 const J=async u=>{const r=await fetch(u);if(!r.ok)throw"Request failed ("+r.status+")";return r.json()};
-const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,0)).join("");
+const jget=(k,d)=>{try{return JSON.parse(LS.getItem(k))||d}catch(e){return d}};
 
-const RECON="RECON",SEC="SECURITY",AUTH="AUTH",TOOLS="TOOLS";
-
-// 1. IP LOOKUP (Real Data)
-add(RECON,"IP LOOKUP",async s=>{
-  const d=await J("https://ipwho.is/"+encodeURIComponent(s.trim()));
-  if(!d.success)throw d.message;
-  const c=d.connection||{};
-  return T({IP:d.ip,TYPE:d.type,COUNTRY:d.country+" ("+d.country_code+")",REGION:d.region,CITY:d.city,ZIP:d.postal,COORDS:d.latitude+", "+d.longitude,ISP:c.isp,ORG:c.org,ASN:c.asn,TIMEZONE:(d.timezone||{}).id});
-},"Enter IP address");
-
-// 2. MY IP LOCATOR (Real Data)
-add(RECON,"MY IP LOCATOR",async()=>{
-  const d=await J("https://ipwho.is/");
-  if(!d.success)throw d.message;
-  const c=d.connection||{};
-  return "=== CURRENT CLIENT IP LOCATION ===\n"+T({IP:d.ip,CITY:d.city,REGION:d.region,COUNTRY:d.country,ISP:c.isp,COORDS:d.latitude+", "+d.longitude,TIMEZONE:(d.timezone||{}).id});
-},0);
-
-// 3. DISCORD ID LOOKUP (Real Snowflake & API Data)
-add(RECON,"DISCORD ID LOOKUP",async s=>{
-  const id=s.trim();
-  if(!/^\d{17,19}$/.test(id))throw"Invalid Discord User ID (must be 17-19 digits)";
-  let data=null;
-  try{
-    const res=await fetch("https://api.lanyard.rest/v1/users/"+id);
-    if(res.ok){const json=await res.json();if(json.success)data=json.data;}
-  }catch(e){}
-  const createdAt=new Date(Number((BigInt(id)>>22n)+1420070400000n)).toUTCString();
-  if(!data){
-    return "=== DISCORD SNOWFLAKE INFO ===\n"+T({ID:id,CREATED_AT:createdAt,STATUS:"Profile cached / API restricted limit reached"});
-  }
-  const u=data.discord_user||{};
-  return T({ID:id,USERNAME:u.username||"-",DISPLAY_NAME:u.global_name||"-",STATUS:data.discord_status||"offline",CREATED_AT:createdAt,AVATAR:u.avatar?"https://cdn.discordapp.com/avatars/"+id+"/"+u.avatar+".png":"None"});
-},"Enter Discord User ID");
-
-// 4. MINECRAFT SERVER STATUS (Real Data)
-add(RECON,"MINECRAFT SERVER",async s=>{
-  const d=await J("https://api.mcsrvstat.us/2/"+encodeURIComponent(s.trim()));
-  if(!d.online)throw"Server is offline or unreachable";
-  return T({IP:d.ip,PORT:d.port,ONLINE:"YES",PLAYERS:d.players.online+"/"+d.players.max,VERSION:d.version,MOTD:(d.motd.clean||[]).join(" ")})},"Enter Server IP or Domain");
-
-// 5. DOMAIN WHOIS / RDAP (Real Data)
-add(RECON,"DOMAIN WHOIS",async s=>{
-  const domain=s.trim().toLowerCase().replace(/^https?:\/\//,"").replace(/\/.*/,"");
-  const d=await J("https://rdap.org/domain/"+encodeURIComponent(domain));
-  const evs=Object.fromEntries((d.events||[]).map(e=>[e.eventAction,e.eventDate.slice(0,10)]));
-  return T({DOMAIN:d.ldhName||domain,REGISTERED:evs.registration||"-",UPDATED:evs["last changed"]||"-",EXPIRES:evs.expiration||"-",STATUS:(d.status||[]).slice(0,3).join(", "),NAMESERVERS:(d.nameservers||[]).map(n=>n.ldhName).join(", ")})
-},"Enter domain (e.g. github.com)");
-
-// 6. WEBRTC LEAK CHECK (Real Browser Test)
-add(SEC,"WEBRTC LEAK CHECK",async()=>{
-  return new Promise(res=>{
-    const ips=new Set();
-    const pc=new RTCPeerConnection({iceServers:[{urls:"stun:stun.l.google.com:19302"}]});
-    pc.createDataChannel("");
-    pc.createOffer().then(o=>pc.setLocalDescription(o));
-    pc.onicecandidate=ic=>{
-      if(!ic||!ic.candidate||!ic.candidate.candidate)return;
-      const parts=ic.candidate.candidate.split(" "),ip=parts[4],type=parts[7];
-      if(ip)ips.add(ip+" ("+type+")");
-    };
-    setTimeout(()=>{
-      pc.close();
-      const list=[...ips];
-      if(!list.length)res("RESULT: No WebRTC leaks detected. Browser is secure.");
-      res("=== WEBRTC LEAK RESULTS ===\nDetected Candidates:\n- "+list.join("\n- "));
-    },1500);
-  });
-},0);
-
-// 7. REAL CLIENT-SIDE LOGIN SYSTEM
-let isLoggedIn=false, loggedUser="";
-add(AUTH,"SYSTEM LOGIN",s=>{
-  const[user,pass]=(s||"").split(":");
-  if(!user||!pass)throw"Format error! Use: username:password";
-  if(user.trim()==="admin"&&pass.trim()==="opsec2026"){
-    isLoggedIn=true; loggedUser="admin";
-    return "[SUCCESS] Authentication granted. Welcome back, admin.\nSession token issued: auth_sess_"+Math.random().toString(36).substring(7);
-  }
-  throw"Access Denied: Invalid credentials.";
-},"username:password");
-
-add(AUTH,"SESSION STATUS",()=>{
-  if(!isLoggedIn)return "[ACCESS DENIED] No active session found. Please login via 'SYSTEM LOGIN'.";
-  return "[ACTIVE SESSION]\nLogged in user: "+loggedUser+"\nStatus: Authorized\nSecurity Level: High Privileges";
-},0);
-
-add(AUTH,"LOGOUT",()=>{
-  isLoggedIn=false; loggedUser="";
-  return "[LOGOUT] Session terminated successfully.";
-},0);
-
-// 8. HASH GENERATORS & TOOLS
-const sha256=async s=>hex(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)));
-add(TOOLS,"SHA-256 HASH",async s=>sha256(s),"Enter text to hash");
-add(TOOLS,"BASE64 ENCODE",s=>btoa(s),"Enter text");
-add(TOOLS,"BASE64 DECODE",s=>atob(s.trim()),"Enter base64 string");
-add(TOOLS,"GENERATE PASSWORD",(s,n)=>Array.from(crypto.getRandomValues(new Uint8Array(+n||18)),x=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*[?]"[x%74]).join(""),0,"Length (Default 18)");
-
-// UI LOGIC
-let cur;
-const nav=$("nav"),cats=[...new Set(M.map(m=>m.c))];
-$("cnt").textContent=M.length+" MODULES · "+cats.length+" CATEGORIES";
-function build(f){
-  nav.innerHTML='<input id="q" placeholder="SEARCH..." value="'+f+'">';
-  cats.forEach(c=>{const l=M.filter(m=>m.c==c&&m.n.toLowerCase().includes(f.toLowerCase()));if(!l.length)return;
-    const h=document.createElement("div");h.className="cat";h.textContent=c+" ["+l.length+"]";nav.appendChild(h);
-    l.forEach(m=>{const b=document.createElement("button");b.textContent=m.n;if(m==cur)b.className="on";b.onclick=()=>pick(m);nav.appendChild(b)})});
-  const q=$("q");q.oninput=()=>{build(q.value);$("q").focus();$("q").setSelectionRange(99,99)}
+/* ---------- AUTH (client-side only) ---------- */
+let reg=false,fails=0,lockUntil=0;
+const users=()=>jget("opsec_users",{});
+async function kdf(p,saltHex){
+  const salt=new Uint8Array(saltHex.match(/../g).map(h=>parseInt(h,16)));
+  const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(p),"PBKDF2",false,["deriveBits"]);
+  return hex(await crypto.subtle.deriveBits({name:"PBKDF2",salt,iterations:150000,hash:"SHA-256"},k,256));
 }
+function gateMode(r){reg=r;$("gt").textContent=r?"CREATE ACCOUNT":"LOGIN";
+  $("gp").textContent=r?"Choose a username and a password (min. 8 characters). Stored only in this browser.":"Sign in to open the toolkit.";
+  $("gw2").classList.toggle("hide",!r);$("gw2").required=r;$("gb").textContent=r?"CREATE ACCOUNT":"SIGN IN";
+  $("gsw").textContent=r?"I already have an account":"Create a new account";$("gmsg").textContent="";
+  $("gw").autocomplete=r?"new-password":"current-password"}
+$("gsw").onclick=()=>gateMode(!reg);
+$("gf").onsubmit=async e=>{e.preventDefault();const m=$("gmsg");m.style.color="";m.className="err";
+  const u=$("gu").value.trim().toLowerCase(),p=$("gw").value,all=users();
+  try{
+    if(reg){
+      if(!/^[a-z0-9_.-]{3,20}$/.test(u))throw"Username: 3-20 chars (a-z, 0-9, _ . -)";
+      if(p.length<8)throw"Password must have at least 8 characters";
+      if(p!==$("gw2").value)throw"Passwords do not match";
+      if(all[u])throw"Username already taken";
+      const salt=hex(crypto.getRandomValues(new Uint8Array(16)));
+      all[u]={salt,hash:await kdf(p,salt),created:Date.now()};LS.setItem("opsec_users",JSON.stringify(all));
+      enter(u);
+    }else{
+      if(Date.now()<lockUntil)throw"Too many attempts. Wait "+Math.ceil((lockUntil-Date.now())/1000)+"s";
+      const a=all[u];const h=a?await kdf(p,a.salt):null;
+      if(!a||h!==a.hash){if(++fails>=5){lockUntil=Date.now()+30000;fails=0}throw"Access denied: wrong username or password"}
+      fails=0;enter(u);
+    }
+  }catch(x){m.textContent=x.message||x}
+};
+function enter(u){SS.setItem("opsec_sess",u);SS.setItem("opsec_t",Date.now());$("gate").classList.add("hide");$("app").classList.remove("hide");
+  $("who").textContent=u;$("gf").reset();$("gmsg").textContent="";startClock()}
+function leave(){SS.removeItem("opsec_sess");location.reload()}
+$("lo").onclick=leave;
+let clk;function startClock(){clearInterval(clk);const t=()=>$("clk").textContent=new Date().toLocaleTimeString();t();clk=setInterval(t,1000)}
+gateMode(!Object.keys(users()).length);
+
+/* ---------- MODULES ---------- */
+const M=[],add=(c,n,f,h,h2,init)=>M.push({c,n,f,h,h2,init});
+const RECON="RECON",NET="NETWORK",SEC="SECURITY",TOOLS="TOOLS",ME="SESSION";
+const ipInfo=d=>{const c=d.connection||{};return T({IP:d.ip,TYPE:d.type,COUNTRY:d.country+" ("+d.country_code+")",REGION:d.region,CITY:d.city,ZIP:d.postal,COORDS:d.latitude+", "+d.longitude,ISP:c.isp,ORG:c.org,ASN:c.asn,TIMEZONE:(d.timezone||{}).id})};
+
+add(RECON,"IP LOOKUP",async s=>{const d=await J("https://ipwho.is/"+encodeURIComponent(s.trim()));if(!d.success)throw d.message;return ipInfo(d)},"Enter IP address");
+add(RECON,"MY IP LOCATOR",async()=>{const d=await J("https://ipwho.is/");if(!d.success)throw d.message;return "=== YOUR PUBLIC IP ===\n"+ipInfo(d)},0);
+add(RECON,"DOMAIN WHOIS",async s=>{
+  const dm=s.trim().toLowerCase().replace(/^https?:\/\//,"").replace(/[\/?#].*/,"");
+  const d=await J("https://rdap.org/domain/"+encodeURIComponent(dm));
+  const ev=Object.fromEntries((d.events||[]).map(e=>[e.eventAction,e.eventDate.slice(0,10)]));
+  return T({DOMAIN:d.ldhName||dm,REGISTERED:ev.registration,UPDATED:ev["last changed"],EXPIRES:ev.expiration,STATUS:(d.status||[]).slice(0,3).join(", "),NAMESERVERS:(d.nameservers||[]).map(n=>n.ldhName).join(", ")})
+},"Enter domain (e.g. github.com)");
+add(RECON,"DISCORD ID LOOKUP",async s=>{
+  const id=s.trim();if(!/^\d{17,19}$/.test(id))throw"Invalid Discord User ID (17-19 digits)";
+  const created=new Date(Number((BigInt(id)>>22n)+1420070400000n)).toUTCString();
+  let data=null;try{const r=await fetch("https://api.lanyard.rest/v1/users/"+id);if(r.ok){const j=await r.json();if(j.success)data=j.data}}catch(e){}
+  if(!data)return "=== DISCORD SNOWFLAKE ===\n"+T({ID:id,CREATED_AT:created,PROFILE:"Not available (not tracked by Lanyard)"});
+  const u=data.discord_user||{};
+  return T({ID:id,USERNAME:u.username,DISPLAY_NAME:u.global_name,STATUS:data.discord_status,CREATED_AT:created,AVATAR:u.avatar?"https://cdn.discordapp.com/avatars/"+id+"/"+u.avatar+".png":"None"})
+},"Enter Discord User ID");
+add(RECON,"GITHUB USER",async s=>{
+  const d=await J("https://api.github.com/users/"+encodeURIComponent(s.trim()));
+  return T({LOGIN:d.login,NAME:d.name,COMPANY:d.company,LOCATION:d.location,BIO:d.bio,REPOS:d.public_repos,FOLLOWERS:d.followers,FOLLOWING:d.following,CREATED:(d.created_at||"").slice(0,10),PROFILE:d.html_url})
+},"Enter GitHub username");
+add(RECON,"MINECRAFT SERVER",async s=>{
+  const d=await J("https://api.mcsrvstat.us/2/"+encodeURIComponent(s.trim()));if(!d.online)throw"Server is offline or unreachable";
+  return T({IP:d.ip,PORT:d.port,ONLINE:"YES",PLAYERS:d.players.online+"/"+d.players.max,VERSION:d.version,MOTD:((d.motd||{}).clean||[]).join(" ")})
+},"Enter server IP or domain");
+add(RECON,"MINECRAFT PLAYER",async s=>{
+  const d=await J("https://playerdb.co/api/player/minecraft/"+encodeURIComponent(s.trim()));if(!d.success)throw"Player not found";
+  const p=d.data.player;return T({USERNAME:p.username,UUID:p.id,AVATAR:p.avatar,SKIN_ID:p.skin_texture})
+},"Enter Minecraft username");
+
+add(NET,"DNS LOOKUP",async(s,t)=>{
+  const type=(t||"A").trim().toUpperCase(),n=s.trim().replace(/^https?:\/\//,"").replace(/[\/?#].*/,"");
+  const d=await J("https://dns.google/resolve?name="+encodeURIComponent(n)+"&type="+encodeURIComponent(type));
+  if(!(d.Answer||[]).length)return "No "+type+" records for "+n+" (status "+d.Status+")";
+  return d.Answer.map(a=>a.name+"  TTL "+a.TTL+"  "+a.data).join("\n")
+},"Enter domain","Record type (A, AAAA, MX, TXT, NS, CNAME) - default A");
+add(NET,"REVERSE DNS",async s=>{
+  const ip=s.trim();if(!/^(\d{1,3}\.){3}\d{1,3}$/.test(ip))throw"Enter an IPv4 address";
+  const d=await J("https://dns.google/resolve?name="+ip.split(".").reverse().join(".")+".in-addr.arpa&type=PTR");
+  return (d.Answer||[]).map(a=>a.data).join("\n")||"No PTR record found"
+},"Enter IPv4 address");
+add(NET,"SUBDOMAIN FINDER",async s=>{
+  const dm=s.trim().toLowerCase().replace(/^https?:\/\//,"").replace(/[\/?#].*/,"");
+  const d=await J("https://crt.sh/?q=%25."+encodeURIComponent(dm)+"&output=json");
+  const set=new Set();d.forEach(r=>r.name_value.split("\n").forEach(n=>set.add(n.replace(/^\*\./,""))));
+  const l=[...set].sort();return l.length+" unique names (certificate transparency)\n\n"+l.slice(0,300).join("\n")
+},"Enter domain (public certificate logs)");
+add(NET,"CIDR CALCULATOR",s=>{
+  const m=s.trim().match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\/(\d{1,2})$/);if(!m)throw"Format: 192.168.1.0/24";
+  const o=m.slice(1,5).map(Number),n=+m[5];if(o.some(x=>x>255)||n>32)throw"Invalid address";
+  const ip=((o[0]<<24)|(o[1]<<16)|(o[2]<<8)|o[3])>>>0,mask=n?(0xFFFFFFFF<<(32-n))>>>0:0,net=(ip&mask)>>>0,bc=(net|~mask)>>>0;
+  const f=x=>[x>>>24,(x>>>16)&255,(x>>>8)&255,x&255].join(".");
+  return T({NETWORK:f(net),NETMASK:f(mask),BROADCAST:f(bc),FIRST_HOST:f(n>=31?net:net+1),LAST_HOST:f(n>=31?bc:bc-1),TOTAL_ADDR:2**(32-n),USABLE_HOSTS:n>=31?2**(32-n):2**(32-n)-2})
+},"Enter CIDR (e.g. 10.0.0.0/22)");
+
+add(SEC,"WEBRTC LEAK CHECK",()=>new Promise(res=>{
+  const ips=new Set(),pc=new RTCPeerConnection({iceServers:[{urls:"stun:stun.l.google.com:19302"}]});
+  pc.createDataChannel("");pc.createOffer().then(o=>pc.setLocalDescription(o));
+  pc.onicecandidate=ic=>{if(!ic||!ic.candidate||!ic.candidate.candidate)return;const p=ic.candidate.candidate.split(" ");if(p[4])ips.add(p[4]+" ("+p[7]+")")};
+  setTimeout(()=>{pc.close();const l=[...ips];res(l.length?"=== WEBRTC CANDIDATES ===\n- "+l.join("\n- ")+"\n\nA 'srflx' entry is your public IP. If it differs from your VPN IP, your browser leaks.":"No WebRTC candidates exposed.")},1800)
+}),0);
+add(SEC,"BROWSER FINGERPRINT",()=>{
+  const n=navigator,s=screen;let gl="-";
+  try{const c=document.createElement("canvas").getContext("webgl"),e=c.getExtension("WEBGL_debug_renderer_info");gl=e?c.getParameter(e.UNMASKED_RENDERER_WEBGL):"hidden"}catch(e){}
+  const cn=n.connection||{};
+  return "=== WHAT WEBSITES CAN READ ===\n"+T({USER_AGENT:n.userAgent,PLATFORM:n.platform,LANGUAGES:(n.languages||[]).join(", "),CPU_CORES:n.hardwareConcurrency,MEMORY_GB:n.deviceMemory,SCREEN:s.width+"x"+s.height+" @"+devicePixelRatio+"x",COLOR_DEPTH:s.colorDepth,TIMEZONE:Intl.DateTimeFormat().resolvedOptions().timeZone,TOUCH_POINTS:n.maxTouchPoints,GPU:gl,CONNECTION:cn.effectiveType,PLUGINS:n.plugins?n.plugins.length:0})
+},0);
+add(SEC,"PRIVACY CHECK",()=>{
+  const n=navigator,dnt=n.doNotTrack==="1"||window.doNotTrack==="1",gpc=!!n.globalPrivacyControl;
+  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone,lang=(n.languages||[]).length;
+  const rows=[[n.cookieEnabled,"Cookies enabled (normal, but trackable)"],[dnt,"Do Not Track sent"],[gpc,"Global Privacy Control sent"],[lang<=2,"Few languages exposed ("+lang+")"],[!n.userAgent.includes("Headless"),"Not a headless browser"],[location.protocol==="https:"||location.protocol==="file:","Page served securely"]];
+  const ok=rows.filter(r=>r[0]).length;
+  return "=== PRIVACY CHECK ===\n"+rows.map(r=>(r[0]?"[ OK ] ":"[WARN] ")+r[1]).join("\n")+"\n\nTimezone visible: "+tz+"\nScore: "+ok+"/"+rows.length
+},0);
+add(SEC,"PASSWORD STRENGTH",s=>{
+  if(!s)throw"Enter a password";let pool=0;
+  if(/[a-z]/.test(s))pool+=26;if(/[A-Z]/.test(s))pool+=26;if(/\d/.test(s))pool+=10;if(/[^a-zA-Z0-9]/.test(s))pool+=33;
+  const bits=Math.round(s.length*Math.log2(pool||1)),v=bits<40?"WEAK":bits<60?"OK":bits<80?"STRONG":"VERY STRONG";
+  const common=/^(password|123456|qwerty|letmein|admin|welcome)/i.test(s)?"YES - never use this":"no";
+  return T({LENGTH:s.length,CHARSET:pool,ENTROPY:bits+" bits",RATING:v,COMMON_START:common,NOTE:"Checked locally, nothing is sent."})
+},"Type a password to test");
+add(SEC,"URL DEFANGER",s=>s.replace(/https?/gi,m=>m.replace("tt","xx")).replace(/\./g,"[.]").replace(/@/g,"[@]"),"Paste URLs or emails (one per line)");
+
+add(TOOLS,"GENERATE PASSWORD",(s,n)=>{const set=(s||"").trim()||"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*?";
+  const len=Math.min(Math.max(+n||18,4),128),out=[],lim=256-256%set.length;
+  while(out.length<len){for(const x of crypto.getRandomValues(new Uint8Array(len*2)))if(x<lim&&out.length<len)out.push(set[x%set.length])}
+  return out.join("")},"Optional: own character set (leave empty for default)","Length (default 18)");
+add(TOOLS,"UUID GENERATOR",()=>Array.from({length:5},()=>crypto.randomUUID()).join("\n"),0);
+add(TOOLS,"BASE64 ENCODE",s=>btoa(String.fromCharCode(...new TextEncoder().encode(s))),"Enter text");
+add(TOOLS,"BASE64 DECODE",s=>new TextDecoder().decode(Uint8Array.from(atob(s.trim()),c=>c.charCodeAt(0))),"Enter base64 string");
+add(TOOLS,"URL ENCODE / DECODE",(s,m)=>(m||"").trim().toLowerCase()==="decode"?decodeURIComponent(s):encodeURIComponent(s),"Enter text","Mode: encode (default) or decode");
+add(TOOLS,"JWT DECODER",s=>{
+  const p=s.trim().split(".");if(p.length<2)throw"Not a JWT";
+  const d=x=>JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(x.replace(/-/g,"+").replace(/_/g,"/")),c=>c.charCodeAt(0))));
+  const pl=d(p[1]);let out="HEADER\n"+JSON.stringify(d(p[0]),null,2)+"\n\nPAYLOAD\n"+JSON.stringify(pl,null,2);
+  if(pl.exp)out+="\n\nEXPIRES: "+new Date(pl.exp*1000).toUTCString()+(pl.exp*1000<Date.now()?"  (EXPIRED)":"");
+  return out+"\n\nSignature is not verified here."},"Paste a JWT");
+add(TOOLS,"TIMESTAMP CONVERTER",s=>{
+  s=s.trim();if(!s){const t=Date.now();return T({NOW_UTC:new Date(t).toUTCString(),UNIX_S:Math.floor(t/1000),UNIX_MS:t})}
+  const d=/^\d+$/.test(s)?new Date(s.length>11?+s:+s*1000):new Date(s);if(isNaN(d))throw"Unknown format";
+  return T({UTC:d.toUTCString(),LOCAL:d.toLocaleString(),ISO:d.toISOString(),UNIX_S:Math.floor(d/1000)})},"Unix time or date (empty = now)");
+add(TOOLS,"TEXT STATS",s=>T({CHARACTERS:s.length,NO_SPACES:s.replace(/\s/g,"").length,WORDS:(s.trim().match(/\S+/g)||[]).length,LINES:s?s.split("\n").length:0,UNIQUE_WORDS:new Set((s.toLowerCase().match(/\S+/g)||[])).size}),"Paste text");
+add(TOOLS,"JSON FORMATTER",s=>JSON.stringify(JSON.parse(s),null,2),"Paste JSON");
+
+const hist=()=>jget("opsec_hist_"+SS.getItem("opsec_sess"),[]);
+add(ME,"OVERVIEW",()=>{const t=Date.now()-(+SS.getItem("opsec_t")||Date.now());
+  return T({USER:SS.getItem("opsec_sess"),SESSION_TIME:Math.floor(t/60000)+" min",MODULES:M.length,RUNS_LOGGED:hist().length,NOTES:(LS.getItem("opsec_notes_"+SS.getItem("opsec_sess"))||"").length+" chars",STORAGE:"This browser only"})},0);
+add(ME,"NOTES",s=>{LS.setItem("opsec_notes_"+SS.getItem("opsec_sess"),s);return "Saved "+s.length+" characters at "+new Date().toLocaleTimeString()},"Private notes (saved per account)",0,()=>LS.getItem("opsec_notes_"+SS.getItem("opsec_sess"))||"");
+add(ME,"HISTORY",()=>hist().map(h=>h.t+"  "+h.m+"  "+h.i).join("\n")||"No runs yet",0);
+add(ME,"CLEAR HISTORY",()=>{LS.removeItem("opsec_hist_"+SS.getItem("opsec_sess"));return "History cleared"},0);
+
+/* ---------- UI ---------- */
+let cur;const cats=[...new Set(M.map(m=>m.c))];
+$("cnt").textContent=M.length+" MODULES · "+cats.length+" CATEGORIES";
+function build(f){const L=$("list");L.textContent="";
+  cats.forEach(c=>{const l=M.filter(m=>m.c==c&&m.n.toLowerCase().includes(f.toLowerCase()));if(!l.length)return;
+    const h=document.createElement("div");h.className="cat";h.textContent=c+" ["+l.length+"]";L.appendChild(h);
+    l.forEach(m=>{const b=document.createElement("button");b.textContent=m.n;if(m==cur)b.className="on";b.onclick=()=>pick(m);L.appendChild(b)})})}
+$("q").oninput=e=>build(e.target.value);
 function pick(m){cur=m;$("mt").textContent=m.n+" »";$("mc").textContent=m.c;
-  $("i").style.display=m.h===0?"none":"block";$("i").placeholder=m.h||"Input";
-  $("i2").style.display=m.h2?"block":"none";$("i2").placeholder=m.h2||"";$("o").textContent="";$("o").className="";
-  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.textContent==m.n))}
-async function run(){const o=$("o");o.className="";o.textContent="PROCESSING...";
-  try{o.textContent=String(await cur.f($("i").value,$("i2").value))}catch(e){o.className="err";o.textContent="ERROR: "+(e.message||e)}}
+  $("i").style.display=m.h===0?"none":"block";$("i").placeholder=m.h||"Input";$("i").value=m.init?m.init():"";
+  $("i2").style.display=m.h2?"block":"none";$("i2").placeholder=m.h2||"";$("i2").value="";$("o").textContent="";$("o").className="";
+  document.querySelectorAll("#list button").forEach(b=>b.classList.toggle("on",b.textContent==m.n))}
+async function run(){if(!SS.getItem("opsec_sess"))return leave();
+  const o=$("o"),m=cur;o.className="";o.textContent="PROCESSING...";
+  try{o.textContent=String(await m.f($("i").value,$("i2").value));
+    if(m.c!==ME&&m.c!==TOOLS){const k="opsec_hist_"+SS.getItem("opsec_sess"),h=hist();h.unshift({t:new Date().toLocaleString(),m:m.n,i:$("i").value.trim().slice(0,40)});LS.setItem(k,JSON.stringify(h.slice(0,50)))}}
+  catch(e){o.className="err";o.textContent="ERROR: "+(e.message||e)}}
 $("go").onclick=run;
 $("cp").onclick=()=>navigator.clipboard.writeText($("o").textContent);
-$("i").addEventListener("keydown",e=>{if(e.key=="Enter"&&e.ctrlKey)run()});
+$("clr").onclick=()=>{$("i").value="";$("i2").value="";$("o").textContent=""};
+$("i").addEventListener("keydown",e=>{if(e.key=="Enter"&&(e.ctrlKey||$("i").tagName!="TEXTAREA"))run()});
 $("i2").addEventListener("keydown",e=>{if(e.key=="Enter")run()});
 build("");pick(M[0]);
+if(SS.getItem("opsec_sess")&&users()[SS.getItem("opsec_sess")])enter(SS.getItem("opsec_sess"));
 </script></body></html>
